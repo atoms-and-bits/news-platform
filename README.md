@@ -1,135 +1,466 @@
-# Turborepo starter
+# Atoms & Bits - News Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+> Deep-tech reporting and data-driven insights for Tanzania and East Africa
 
-## Using this example
+## 📰 About Atoms & Bits
 
-Run the following command:
+**Atoms & Bits** is a technology news and research platform focused on Tanzania and the East African tech ecosystem. We provide in-depth coverage of startups, policy, innovation, and the people building the future of technology in the region.
 
-```sh
-npx create-turbo@latest
+This repository contains the codebase for our **news website platform** - a Next.js-based web application featuring articles, podcasts, events, and a comprehensive startup directory.
+
+---
+
+## 🚀 Quick Start for Engineers
+
+### Prerequisites
+
+- **Node.js** 18+ and **pnpm** installed
+- Basic familiarity with Next.js 14+ (App Router)
+- Understanding of TypeScript and React
+
+### Getting Started
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd news-platform
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Run development server (from root using pnpm workspace)
+pnpm --filter web dev
+
+# Or navigate to the app directory
+cd apps/web
+pnpm run dev
+
+# 4. Open in browser
+# → http://localhost:3000
 ```
 
-## What's inside?
+### First-Time Setup Checklist
 
-This Turborepo includes the following packages/apps:
+- [ ] Read [CODEBASE_GUIDE.md](CODEBASE_GUIDE.md) - Complete codebase reference
+- [ ] Review [apps/web/app/data/](apps/web/app/data/) - Understand current data structure
+- [ ] Explore the component library in [apps/web/app/components/](apps/web/app/components/)
+- [ ] Check out a few pages to see data flow patterns
 
-### Apps and Packages
+---
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## 🏗️ Project Structure
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+This is a **Turborepo monorepo** with the following structure:
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+news-platform/
+├── apps/
+│   ├── web/                  # Main Next.js application (PRIMARY)
+│   │   ├── app/
+│   │   │   ├── components/   # React components
+│   │   │   ├── data/         # Mock data (to be replaced with Sanity CMS)
+│   │   │   ├── */page.tsx    # Route pages
+│   │   │   └── layout.tsx    # Root layout
+│   │   └── public/           # Static assets
+│   └── docs/                 # Documentation site (optional)
+├── packages/
+│   ├── ui/                   # Shared UI components
+│   ├── eslint-config/        # Shared ESLint configs
+│   └── typescript-config/    # Shared TypeScript configs
+├── CODEBASE_GUIDE.md         # 📚 Detailed codebase documentation
+├── SANITY_MIGRATION_PLAN.md  # 🔄 Sanity CMS integration guide
+└── turbo.json                # Turborepo configuration
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### Key Directories
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+| Directory | Purpose |
+|-----------|---------|
+| `apps/web/app/data/` | **Mock data files** (articles, podcasts, events, startups) - Will be replaced with Sanity CMS |
+| `apps/web/app/components/` | Reusable React components (ArticleCard, Header, Footer, etc.) |
+| `apps/web/app/*/page.tsx` | Next.js App Router pages (one per route) |
+| `apps/web/app/lib/` | Utility functions and helpers (to be created for Sanity) |
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+---
 
-### Develop
+## 🛠️ Tech Stack
 
-To develop all apps and packages, run the following command:
+### Core Technologies
 
-```
-cd my-turborepo
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/)
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+### Infrastructure
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+- **Monorepo:** [Turborepo](https://turbo.build/)
+- **Package Manager:** [pnpm](https://pnpm.io/)
+- **CMS:** Sanity (planned - see [SANITY_MIGRATION_PLAN.md](SANITY_MIGRATION_PLAN.md))
+- **Deployment:** Vercel (recommended)
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### Data Architecture (Current)
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+**Status:** Using mock data from TypeScript files
+**Future:** Migrating to Sanity CMS for content management
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+Current data sources:
+- `apps/web/app/data/articles.ts` - News articles
+- `apps/web/app/data/content.ts` - Podcasts and events
+- `apps/web/app/data/startups.ts` - Startup directory
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## 🧑‍💻 Development Workflow
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### pnpm Workspace Commands
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+This project uses **pnpm workspaces**. You can run commands for specific apps using the `--filter` flag:
 
-```
-cd my-turborepo
+```bash
+# Run dev server for web app (from root)
+pnpm --filter web dev
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+# Build specific app
+pnpm --filter web build
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+# Add dependency to specific app
+pnpm add <package-name> --filter web
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+# Add dev dependency
+pnpm add -D <package-name> --filter web
 ```
 
-## Useful Links
+### Running the Dev Server
 
-Learn more about the power of Turborepo:
+```bash
+# Option 1: From root using pnpm workspace (recommended)
+pnpm --filter web dev
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+# Option 2: Navigate to app directory
+cd apps/web
+pnpm run dev
+
+# Option 3: Using Turborepo (runs all apps)
+pnpm turbo dev
+```
+
+### Building for Production
+
+```bash
+# Build single app from root
+pnpm --filter web build
+
+# Or navigate to app directory
+cd apps/web
+pnpm run build
+
+# Build all apps using Turborepo
+pnpm turbo build
+```
+
+### Code Quality
+
+```bash
+# Linting (from root)
+pnpm --filter web lint
+
+# Type checking
+pnpm --filter web type-check
+
+# Format code
+pnpm --filter web format
+
+# Or from app directory
+cd apps/web
+pnpm run lint
+pnpm run type-check
+```
+
+---
+
+## 📄 Available Routes
+
+| Route | Description | Data Source |
+|-------|-------------|-------------|
+| `/` | Homepage with hero grid | All data sources |
+| `/latest` | Latest articles feed | `articles.ts` |
+| `/stories` | All stories (filterable by category) | `articles.ts` |
+| `/article/[slug]` | Individual article page | `articles.ts` |
+| `/roundups` | Weekly roundup articles | `articles.ts` |
+| `/podcasts` | Podcast episodes | `content.ts` |
+| `/events` | Event listings with registration | `content.ts` |
+| `/startups` | Startup directory (searchable) | `startups.ts` |
+| `/startup/[slug]` | Startup profile page | `startups.ts` |
+| `/signin` | Authentication page | None (placeholder) |
+| `/subscribe` | Subscription plans | None (placeholder) |
+| `/profile` | User profile | None (placeholder) |
+
+---
+
+## 🎨 Design System
+
+### Color Palette
+
+```css
+/* Primary Colors */
+--navy-dark: #000137;      /* Primary dark, headings, text */
+--brand-purple: #2f3192;   /* Brand color, buttons, links */
+--light-gray: #f8f9fa;     /* Page background */
+
+/* Accent Colors */
+--amber: #fbbf24;          /* Premium badges */
+--white: #ffffff;          /* Cards, backgrounds */
+```
+
+### Typography
+
+- **Serif:** Spectral (headings, article titles)
+- **Sans-serif:** Inter (body text, UI elements)
+
+### Component Patterns
+
+See [CODEBASE_GUIDE.md](CODEBASE_GUIDE.md) for detailed component documentation.
+
+---
+
+## 📚 Documentation
+
+- **[CODEBASE_GUIDE.md](CODEBASE_GUIDE.md)** - Complete reference guide
+  - Data architecture
+  - Component hierarchy
+  - Routes and dependencies
+  - Coding patterns
+
+- **[SANITY_MIGRATION_PLAN.md](SANITY_MIGRATION_PLAN.md)** - CMS integration plan
+  - Sanity setup instructions
+  - Schema design
+  - Migration strategy
+  - GROQ queries
+
+---
+
+## 🔄 Upcoming: Sanity CMS Integration
+
+We're migrating from mock data to **Sanity CMS** for content management. See [SANITY_MIGRATION_PLAN.md](SANITY_MIGRATION_PLAN.md) for the complete migration plan.
+
+**Migration Status:**
+- [ ] Sanity project setup
+- [ ] Schema design (Article, Podcast, Event, Startup)
+- [ ] Data migration scripts
+- [ ] Update components to use Sanity client
+- [ ] Implement ISR (Incremental Static Regeneration)
+
+---
+
+## 🧪 Testing (Coming Soon)
+
+```bash
+# Unit tests
+pnpm --filter web test
+
+# E2E tests
+pnpm --filter web test:e2e
+
+# Test coverage
+pnpm --filter web test:coverage
+```
+
+---
+
+## 🚢 Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Environment Variables
+
+Create `.env.local` in `apps/web/`:
+
+```bash
+# Sanity (when integrated)
+NEXT_PUBLIC_SANITY_PROJECT_ID="your-project-id"
+NEXT_PUBLIC_SANITY_DATASET="production"
+SANITY_API_TOKEN="your-token"
+
+# Analytics (optional)
+NEXT_PUBLIC_GA_ID="your-ga-id"
+```
+
+---
+
+## 🤝 Contributing
+
+### Branch Naming
+
+```
+feature/article-search
+fix/header-navigation
+refactor/data-layer
+docs/api-documentation
+```
+
+### Commit Messages
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```bash
+feat: add article search functionality
+fix: resolve mobile navigation bug
+refactor: migrate to Sanity CMS
+docs: update README with deployment guide
+```
+
+### Pull Request Process
+
+1. Create a feature branch from `main`
+2. Make your changes
+3. Run linting and type checks
+4. Commit with descriptive messages
+5. Open PR with clear description
+6. Request review from team members
+
+---
+
+## 📖 Useful Commands
+
+### Package Management
+
+```bash
+# Install all dependencies (from root)
+pnpm install
+
+# Add dependency to specific app
+pnpm add <package-name> --filter web
+
+# Add dev dependency
+pnpm add -D <package-name> --filter web
+
+# Remove dependency
+pnpm remove <package-name> --filter web
+
+# Update dependencies
+pnpm update --filter web
+```
+
+### Development
+
+```bash
+# Start dev server (from root)
+pnpm --filter web dev
+
+# Start dev server (from app directory)
+cd apps/web && pnpm run dev
+
+# Build for production
+pnpm --filter web build
+
+# Run production build
+pnpm --filter web start
+```
+
+### Code Quality
+
+```bash
+# Run ESLint
+pnpm --filter web lint
+
+# TypeScript type checking
+pnpm --filter web type-check
+
+# Format code
+pnpm --filter web format
+```
+
+### Turborepo Commands
+
+```bash
+# Build all apps
+pnpm turbo build
+
+# Dev all apps
+pnpm turbo dev
+
+# Build specific app
+pnpm turbo build --filter=web
+
+# Clear Turborepo cache
+pnpm turbo clean
+```
+
+---
+
+## 🔗 Resources
+
+### Project Documentation
+- [Codebase Guide](CODEBASE_GUIDE.md)
+- [Sanity Migration Plan](SANITY_MIGRATION_PLAN.md)
+
+### Technology Documentation
+- [Next.js App Router](https://nextjs.org/docs/app)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Turborepo](https://turbo.build/docs)
+- [Sanity](https://www.sanity.io/docs)
+
+### Team Resources
+- Design System: [Coming Soon]
+- API Documentation: [Coming Soon]
+- Deployment Guide: [Coming Soon]
+
+---
+
+## 👥 Team
+
+For questions or support:
+- **Technical Lead:** [Contact Info]
+- **Product Owner:** [Contact Info]
+- **Design:** [Contact Info]
+
+---
+
+## 📝 License
+
+[Specify License]
+
+---
+
+## 🎯 Roadmap
+
+### Phase 1: MVP (Current)
+- [x] Core page layouts
+- [x] Component library
+- [x] Mock data integration
+- [x] Responsive design
+- [ ] Sanity CMS integration
+
+### Phase 2: Content Management
+- [ ] Sanity Studio setup
+- [ ] Author management
+- [ ] Content workflows
+- [ ] Image optimization
+
+### Phase 3: Features
+- [ ] User authentication (Supabase/NextAuth)
+- [ ] Subscription system
+- [ ] Search functionality
+- [ ] Newsletter integration
+- [ ] Analytics dashboard
+
+### Phase 4: Enhancement
+- [ ] Performance optimization
+- [ ] SEO improvements
+- [ ] PWA support
+- [ ] Multi-language support
+
+---
+
+**Built with ❤️ in Tanzania**
