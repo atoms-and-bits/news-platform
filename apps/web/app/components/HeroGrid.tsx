@@ -1,3 +1,9 @@
+/**
+ * Hero Grid Component
+ * Displays 3 main articles in a grid layout on homepage
+ * Client component: Uses Framer Motion for animations
+ * Data passed from server component via props
+ */
 'use client';
 
 import React from 'react';
@@ -5,13 +11,34 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArticleCard } from './ArticleCard';
 import { TopHeadlines } from './TopHeadlines';
-import { allArticles } from '../data/articles';
 
-export function HeroGrid() {
-  // Use specific articles for the hero grid to match design
-  const anchorStory = allArticles[0]!; // OpenAI
-  const featuredStory = allArticles[1]!; // CRDB
-  const roundupStory = allArticles[2]!; // Nala
+// ─── Type Definitions ────────────────────────────────────────
+interface Article {
+  id: string;
+  slug: string;
+  category: string;
+  title: string;
+  author: string;
+  time: string;
+  imageUrl: string;
+  premium?: boolean;
+}
+
+interface HeroGridProps {
+  articles: Article[];
+}
+
+// ─── Component ───────────────────────────────────────────────
+export function HeroGrid({ articles }: HeroGridProps) {
+  // Use first 3 articles for the hero grid
+  const anchorStory = articles[0];
+  const featuredStory = articles[1];
+  const roundupStory = articles[2];
+
+  // Early return if not enough articles
+  if (!anchorStory || !featuredStory || !roundupStory) {
+    return null;
+  }
   const container = {
     hidden: {
       opacity: 0
@@ -50,7 +77,7 @@ export function HeroGrid() {
           className="lg:col-span-6 flex flex-col h-[500px] lg:h-[600px]"
           variants={item}>
 
-          <Link href={`/article/${anchorStory.id}`}>
+          <Link href={`/article/${anchorStory.slug}`}>
             <ArticleCard
               category={anchorStory.category}
               title={anchorStory.title}
@@ -69,7 +96,7 @@ export function HeroGrid() {
           className="lg:col-span-3 flex flex-col gap-6 h-full"
           variants={item}>
 
-          <Link href={`/article/${featuredStory.id}`}>
+          <Link href={`/article/${featuredStory.slug}`}>
             <ArticleCard
               category={featuredStory.category}
               title={featuredStory.title}
@@ -80,14 +107,15 @@ export function HeroGrid() {
               premium={featuredStory.premium} />
           </Link>
 
-          <Link href={`/article/${roundupStory.id}`}>
+          <Link href={`/article/${roundupStory.slug}`}>
             <ArticleCard
               category={roundupStory.category}
               title={roundupStory.title}
               author={roundupStory.author}
               time={roundupStory.time}
               imageUrl={roundupStory.imageUrl}
-              className="flex-1 shadow-md" />
+              className="flex-1 shadow-md"
+              premium={roundupStory.premium} />
           </Link>
 
         </motion.div>

@@ -1,14 +1,44 @@
+/**
+ * Podcasts & Events Component
+ * Displays podcast episodes and upcoming events on homepage
+ * Client component: Renders interactive cards
+ * Data passed from server component via props
+ */
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
-import { Play, Calendar, MapPin, ArrowRight } from 'lucide-react';
-import { podcasts, events } from '../data/content';
+import { Play, MapPin } from 'lucide-react';
 
-export function PodcastsEvents() {
-  // Show only first 3 items for preview
-  const previewPodcasts = podcasts.slice(0, 3);
-  const previewEvents = events.slice(0, 3);
+// ─── Type Definitions ────────────────────────────────────────
+interface Podcast {
+  id: string;
+  title: string;
+  duration: string;
+  description: string;
+  audioUrl: string;
+  coverImage: string;
+}
+
+interface Event {
+  id: string;
+  title: string;
+  date: string;
+  month: string;
+  time: string;
+  location: string;
+  venue: string;
+  description: string;
+  premium: boolean;
+}
+
+interface PodcastsEventsProps {
+  podcasts: Podcast[];
+  events: Event[];
+}
+
+// ─── Component ───────────────────────────────────────────────
+export function PodcastsEvents({ podcasts, events }: PodcastsEventsProps) {
   return (
     <section className="py-16 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,10 +61,10 @@ export function PodcastsEvents() {
             </p>
 
             <div className="space-y-6">
-              {previewPodcasts.map((pod) =>
-              <div
-                key={pod.id}
-                className="flex items-center gap-4 group cursor-pointer p-4 rounded-lg hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100">
+              {podcasts.map((podcast, index) => (
+                <div
+                  key={podcast.id}
+                  className="flex items-center gap-4 group cursor-pointer p-4 rounded-lg hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100">
 
                   <div className="w-12 h-12 rounded-full bg-[#000137] flex items-center justify-center flex-shrink-0 group-hover:bg-[#2f3192] transition-colors">
                     <Play className="w-5 h-5 text-white ml-1" />
@@ -42,18 +72,18 @@ export function PodcastsEvents() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs font-bold text-[#2f3192] bg-[#2f3192]/10 px-2 py-0.5 rounded-full">
-                        EP. {pod.id}
+                        EP. {47 - index}
                       </span>
                       <span className="text-xs text-gray-400 font-sans">
-                        {pod.duration}
+                        {podcast.duration}
                       </span>
                     </div>
                     <h3 className="font-serif font-bold text-[#000137] group-hover:text-[#2f3192] transition-colors">
-                      {pod.title}
+                      {podcast.title}
                     </h3>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
 
@@ -71,8 +101,8 @@ export function PodcastsEvents() {
             </div>
 
             <div className="space-y-6">
-              {previewEvents.map((event) =>
-              <div key={event.id} className="flex gap-4 group cursor-pointer">
+              {events.map((event) => (
+                <div key={event.id} className="flex gap-4 group cursor-pointer">
                   <div className="w-16 flex-shrink-0 flex flex-col items-center border border-gray-200 rounded-lg overflow-hidden">
                     <span className="w-full bg-[#000137] text-white text-xs font-bold text-center py-1">
                       {event.month}
@@ -94,7 +124,7 @@ export function PodcastsEvents() {
                     </p>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>
