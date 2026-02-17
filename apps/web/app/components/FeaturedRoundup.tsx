@@ -1,14 +1,33 @@
+/**
+ * Featured Roundup Component
+ * Displays editor picks and weekly roundup stories on homepage
+ * Client component: Renders article cards with navigation
+ * Data passed from server component via props
+ */
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import { ArticleCard } from './ArticleCard';
-import { allArticles } from '../data/articles';
 
-export function FeaturedRoundup() {
-  // Get specific articles for this section
-  const editorPicks = allArticles.slice(4, 6).filter(Boolean); // KilimoSmart, TRA
-  const roundupStories = allArticles.slice(6, 9).filter(Boolean); // Silicon Zanzibar, BoT, AI Lab
+// ─── Type Definitions ────────────────────────────────────────
+interface Article {
+  id: string;
+  slug: string;
+  category: string;
+  title: string;
+  author: string;
+  time: string;
+  imageUrl: string;
+}
+
+interface FeaturedRoundupProps {
+  editorPicks: Article[];
+  roundupStories: Article[];
+}
+
+// ─── Component ───────────────────────────────────────────────
+export function FeaturedRoundup({ editorPicks, roundupStories }: FeaturedRoundupProps) {
   return (
     <section className="py-16 bg-[#f8f9fa] border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,18 +39,18 @@ export function FeaturedRoundup() {
               Editor's Picks
             </h2>
             <div className="space-y-8">
-              {editorPicks.map((article) =>
-              <Link key={article.id} href={`/article/${article.id}`}>
-                <ArticleCard
-                  category={article.category}
-                  title={article.title}
-                  author={article.author}
-                  time={article.time}
-                  imageUrl={article.imageUrl}
-                  size="medium"
-                  className="h-[300px] shadow-md hover:shadow-xl transition-shadow" />
-              </Link>
-              )}
+              {editorPicks.map((article) => (
+                <Link key={article.id} href={`/article/${article.slug}`}>
+                  <ArticleCard
+                    category={article.category}
+                    title={article.title}
+                    author={article.author}
+                    time={article.time}
+                    imageUrl={article.imageUrl}
+                    size="medium"
+                    className="h-[300px] shadow-md hover:shadow-xl transition-shadow" />
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -46,32 +65,32 @@ export function FeaturedRoundup() {
               </p>
 
               <div className="space-y-8">
-                {roundupStories.map((article, index) =>
-                <Link
-                  key={article.id}
-                  href={`/article/${article.id}`}
-                  className="block group cursor-pointer">
-                  <div className="flex items-start gap-4">
-                    <span className="text-4xl font-serif font-bold text-gray-100 leading-none -mt-2 group-hover:text-[#2f3192]/20 transition-colors">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <span className="text-[#2f3192] text-xs font-bold uppercase tracking-wider mb-1 block">
-                        {article.category}
+                {roundupStories.map((article, index) => (
+                  <Link
+                    key={article.id}
+                    href={`/article/${article.slug}`}
+                    className="block group cursor-pointer">
+                    <div className="flex items-start gap-4">
+                      <span className="text-4xl font-serif font-bold text-gray-100 leading-none -mt-2 group-hover:text-[#2f3192]/20 transition-colors">
+                        {index + 1}
                       </span>
-                      <h3 className="font-serif font-bold text-lg text-[#000137] leading-tight group-hover:text-[#2f3192] transition-colors mb-2">
-                        {article.title}
-                      </h3>
-                      <span className="text-gray-400 text-xs font-sans">
-                        {article.time}
-                      </span>
+                      <div>
+                        <span className="text-[#2f3192] text-xs font-bold uppercase tracking-wider mb-1 block">
+                          {article.category}
+                        </span>
+                        <h3 className="font-serif font-bold text-lg text-[#000137] leading-tight group-hover:text-[#2f3192] transition-colors mb-2">
+                          {article.title}
+                        </h3>
+                        <span className="text-gray-400 text-xs font-sans">
+                          {article.time}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  {index < roundupStories.length - 1 &&
-                    <div className="h-px bg-gray-100 mt-6 w-full" />
-                  }
-                </Link>
-                )}
+                    {index < roundupStories.length - 1 &&
+                      <div className="h-px bg-gray-100 mt-6 w-full" />
+                    }
+                  </Link>
+                ))}
               </div>
 
               <Link

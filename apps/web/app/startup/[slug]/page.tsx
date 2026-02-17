@@ -1,6 +1,10 @@
-'use client';
+/**
+ * Startup Profile Page
+ * Server component: Fetches startup data by slug from Sanity
+ * Displays detailed information about a specific startup
+ */
 
-import React, { use, useEffect } from 'react';
+import React from 'react';
 import {
   ArrowLeft,
   Globe,
@@ -8,36 +12,31 @@ import {
   Users,
   Briefcase,
   Calendar,
-  DollarSign } from
-'lucide-react';
-import { getStartupById } from '../../data/startups';
+  DollarSign,
+} from 'lucide-react';
+import { getStartupBySlug, getAllStartups } from '../../../lib/sanity/queries';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
-export default function StartupProfilePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
-  const startup = getStartupById(parseInt(slug));
+// ─── Type Definitions ────────────────────────────────────────
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
+// ─── Server Component ────────────────────────────────────────
+export default async function StartupProfilePage({ params }: PageProps) {
+  const { slug } = await params;
 
+  // Fetch startup from Sanity by slug
+  const startup = await getStartupBySlug(slug);
+
+  // If startup not found, show 404
   if (!startup) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa]">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-[#000137] mb-4">
-            Startup not found
-          </h1>
-          <Link
-            href="/startups"
-            className="text-[#2f3192] hover:underline">
-
-            Back to Startups
-          </Link>
-        </div>
-      </div>);
-
+    notFound();
   }
+
   return (
     <div className="pb-20">
       {/* Navigation Bar */}
@@ -45,8 +44,8 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           <Link
             href="/startups"
-            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#000137] transition-colors">
-
+            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#000137] transition-colors"
+          >
             <ArrowLeft className="w-4 h-4" />
             Back to Startups
           </Link>
@@ -58,7 +57,7 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
         <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="w-24 h-24 bg-gray-50 rounded-2xl flex items-center justify-center text-4xl font-bold text-[#000137] border border-gray-100 flex-shrink-0">
-              {startup.logo}
+              {startup.logo || startup.name.charAt(0)}
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -81,8 +80,8 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                 href={startup.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#000137] text-white font-bold rounded-lg hover:bg-[#2f3192] transition-colors shadow-md">
-
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#000137] text-white font-bold rounded-lg hover:bg-[#2f3192] transition-colors shadow-md"
+              >
                 <Globe className="w-4 h-4" /> Visit Website
               </a>
             </div>
@@ -97,21 +96,22 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                 About {startup.name}
               </h2>
               <div className="prose prose-lg text-gray-600">
-                <p>{startup.longDescription}</p>
+                <p>{startup.longDescription || startup.description}</p>
               </div>
             </div>
 
-            {startup.founders.length > 0 &&
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+            {/* Founders Section */}
+            {startup.founders && startup.founders.length > 0 && (
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
                 <h2 className="font-serif text-2xl font-bold text-[#000137] mb-6">
                   Founding Team
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {startup.founders.map((founder, idx) =>
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100">
-
+                  {startup.founders.map((founder, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100"
+                    >
                       <div className="w-12 h-12 bg-[#2f3192]/10 rounded-full flex items-center justify-center text-[#2f3192] font-bold">
                         {founder.name.charAt(0)}
                       </div>
@@ -119,15 +119,13 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                         <div className="font-bold text-[#000137]">
                           {founder.name}
                         </div>
-                        <div className="text-sm text-gray-500">
-                          {founder.role}
-                        </div>
+                        <div className="text-sm text-gray-500">{founder.role}</div>
                       </div>
                     </div>
-                )}
+                  ))}
                 </div>
               </div>
-            }
+            )}
           </div>
 
           {/* Sidebar */}
@@ -146,9 +144,7 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                     <div className="text-xs text-gray-400 font-bold uppercase">
                       Founded
                     </div>
-                    <div className="font-medium text-[#000137]">
-                      {startup.founded}
-                    </div>
+                    <div className="font-medium text-[#000137]">{startup.founded}</div>
                   </div>
                 </div>
 
@@ -160,9 +156,7 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                     <div className="text-xs text-gray-400 font-bold uppercase">
                       Location
                     </div>
-                    <div className="font-medium text-[#000137]">
-                      {startup.location}
-                    </div>
+                    <div className="font-medium text-[#000137]">{startup.location}</div>
                   </div>
                 </div>
 
@@ -174,9 +168,7 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                     <div className="text-xs text-gray-400 font-bold uppercase">
                       Team Size
                     </div>
-                    <div className="font-medium text-[#000137]">
-                      {startup.teamSize}
-                    </div>
+                    <div className="font-medium text-[#000137]">{startup.teamSize}</div>
                   </div>
                 </div>
 
@@ -188,9 +180,7 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                     <div className="text-xs text-gray-400 font-bold uppercase">
                       Total Funding
                     </div>
-                    <div className="font-medium text-[#000137]">
-                      {startup.funding}
-                    </div>
+                    <div className="font-medium text-[#000137]">{startup.funding}</div>
                   </div>
                 </div>
 
@@ -202,9 +192,7 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
                     <div className="text-xs text-gray-400 font-bold uppercase">
                       Stage
                     </div>
-                    <div className="font-medium text-[#000137]">
-                      {startup.stage}
-                    </div>
+                    <div className="font-medium text-[#000137]">{startup.stage}</div>
                   </div>
                 </div>
               </div>
@@ -212,6 +200,20 @@ export default function StartupProfilePage({ params }: { params: Promise<{ slug:
           </div>
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 }
+
+// ─── ISR Configuration ───────────────────────────────────────
+/**
+ * Generate static pages for all startups at build time
+ * Then use ISR for dynamic updates
+ */
+export async function generateStaticParams() {
+  const startups = await getAllStartups();
+  return startups.map((startup) => ({
+    slug: startup.slug.current,
+  }));
+}
+
+export const revalidate = 60; // Revalidate every 60 seconds

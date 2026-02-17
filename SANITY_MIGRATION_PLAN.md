@@ -29,26 +29,30 @@ npm create sanity@latest -- --project news-platform --dataset production
 ### 3. Create Directory Structure
 ```
 apps/
-├── web/
+├── web/                             # Next.js news website
 │   └── app/
 │       └── lib/
 │           ├── sanity/
-│           │   ├── client.ts      # Sanity client config
-│           │   ├── queries.ts     # GROQ queries
-│           │   └── schemas/       # TypeScript types
+│           │   ├── client.ts        # Sanity client config
+│           │   ├── queries.ts       # GROQ queries
+│           │   └── schemas/         # TypeScript types
 │           │       ├── article.ts
 │           │       ├── podcast.ts
 │           │       ├── event.ts
 │           │       └── startup.ts
 │           └── utils/
-│               └── imageBuilder.ts # Image URL builder
-└── studio/                         # Sanity Studio app
-    └── schemas/
+│               └── imageBuilder.ts  # Image URL builder
+└── atoms-and-bits-news/             # Sanity Studio (CMS)
+    ├── sanity.cli.ts
+    ├── sanity.config.ts
+    └── schemaTypes/
         ├── article.ts
         ├── podcast.ts
         ├── event.ts
         └── startup.ts
 ```
+
+**Status:** ✅ Studio created at `apps/atoms-and-bits-news/`
 
 ---
 

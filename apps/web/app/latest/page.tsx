@@ -1,13 +1,35 @@
-'use client';
+/**
+ * Latest News Page
+ * Displays all articles sorted by publish date (newest first)
+ * Data fetched from Sanity CMS with ISR (Incremental Static Regeneration)
+ */
 
 import React from 'react';
 import Link from 'next/link';
 import { ArticleListCard } from '../components/ArticleListCard';
 import { TopHeadlines } from '../components/TopHeadlines';
-import { allArticles } from '../data/articles';
+import { getAllArticles } from '../../lib/sanity/queries';
+import { formatRelativeTime } from '../../lib/utils/dateHelpers';
+import { urlFor } from '../../lib/sanity/image';
 
-export default function LatestPage() {
-  const articles = allArticles;
+// ─── Server Component (fetches data at build time + revalidates) ───
+export default async function LatestPage() {
+  // Fetch all articles from Sanity (sorted by publishedAt desc)
+  const sanityArticles = await getAllArticles();
+
+  // Transform Sanity data to match ArticleListCard props
+  const articles = sanityArticles.map((article) => ({
+    id: article._id,
+    slug: article.slug.current, // Extract slug for navigation
+    category: article.category,
+    title: article.title,
+    excerpt: article.excerpt,
+    author: article.author,
+    time: formatRelativeTime(article.publishedAt), // Convert ISO to "8 hours ago"
+    imageUrl: article.mainImage
+      ? urlFor(article.mainImage).width(800).height(600).url() // Use Sanity image if available
+      : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80', // Fallback placeholder
+  }));
 
   return (
     <div className="pb-12">
@@ -29,13 +51,13 @@ export default function LatestPage() {
             {articles.map((article) => (
               <ArticleListCard
                 key={article.id}
+                slug={article.slug}
                 category={article.category}
                 title={article.title}
                 excerpt={article.excerpt}
                 author={article.author}
                 time={article.time}
                 imageUrl={article.imageUrl}
-                onClick={() => {}} // TODO: Convert to use Link in ArticleListCard component
               />
             ))}
 
@@ -78,3 +100,13 @@ export default function LatestPage() {
     </div>
   );
 }
+
+// ─── ISR Configuration ───────────────────────────────────────
+/**
+ * Revalidate this page every 60 seconds
+ * This enables Incremental Static Regeneration (ISR):
+ * - Page is statically generated at build time
+ * - After 60 seconds, the next request triggers a regeneration
+ * - New content from Sanity appears automatically without redeploying
+ */
+export const revalidate = 60; // Revalidate every 60 seconds
