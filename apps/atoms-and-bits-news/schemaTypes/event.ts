@@ -72,6 +72,15 @@ export default defineType({
       placeholder: 'UDSM Innovation Hub',
     }),
 
+    // ─── Capacity ────────────────────────────────────────────
+    defineField({
+      name: 'capacity',
+      title: 'Capacity',
+      type: 'number',
+      description: 'Maximum number of attendees. Leave empty for unlimited.',
+      validation: (Rule) => Rule.min(1).integer(),
+    }),
+
     // ─── Details ─────────────────────────────────────────────
     defineField({
       name: 'description',

@@ -3,14 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Menu, X, User, LogOut, Settings } from 'lucide-react';
-interface User {
-  name: string;
-  email: string;
-  plan: 'free' | 'basic' | 'standard' | 'premium';
-}
+import { Search, Menu, X, LogOut, Settings } from 'lucide-react';
+import type { HeaderUser } from './ClientLayout';
+
 interface HeaderProps {
-  user: User | null;
+  user: HeaderUser | null;
   onLogout: () => void;
 }
 export function Header({
@@ -91,7 +88,7 @@ export function Header({
             <div className="md:hidden flex items-center mr-2">
               {user && isPremium &&
               <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider shadow-sm">
-                  PRO
+                  PREMIUM
                 </span>
               }
               {user && !isPremium &&
@@ -134,7 +131,7 @@ export function Header({
                       </span>
                       {isPremium &&
                     <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
-                          PRO
+                          PREMIUM
                         </span>
                     }
                     </button>
@@ -229,7 +226,7 @@ export function Header({
                         </p>
                         {isPremium &&
                     <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                            PRO
+                            PREMIUM
                           </span>
                     }
                       </div>

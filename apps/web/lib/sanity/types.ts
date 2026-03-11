@@ -63,10 +63,11 @@ export interface SanityEvent {
   title: string;
   date: string; // e.g. "15"
   month: string; // e.g. "FEB"
+  time?: string;
   location: string;
-  description: string;
-  time: string;
-  venue: string;
+  venue?: string;
+  capacity?: number;
+  description?: string;
   premium?: boolean;
 }
 

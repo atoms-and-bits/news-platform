@@ -42,10 +42,12 @@ interface ArticleContentProps {
   relatedArticles: RelatedArticle[];
 }
 
+import type { Enums } from '../../../lib/supabase/database.types';
+
 interface UserType {
   name: string;
   email: string;
-  plan: 'free' | 'basic' | 'standard' | 'premium';
+  plan: Enums<'user_plan'>;
 }
 
 // ─── Portable Text Components ────────────────────────────────

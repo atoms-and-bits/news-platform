@@ -67,7 +67,7 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
     `*[_type == "event"] | order(date asc) {
       _id, _createdAt,
       title, date, month, location,
-      description, time, venue, premium
+      description, time, venue, capacity, premium
     }`
   );
 }
