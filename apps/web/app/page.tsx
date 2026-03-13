@@ -67,10 +67,10 @@ export default async function Home() {
     title: event.title,
     date: event.date,
     month: event.month,
-    time: event.time,
+    time: event.time || '',
     location: event.location,
     venue: event.venue || '',
-    description: event.description,
+    description: event.description || '',
     premium: event.premium || false,
   }));
 

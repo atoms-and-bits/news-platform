@@ -4,16 +4,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Search, Menu, X, LogOut, Settings } from 'lucide-react';
-import type { HeaderUser } from './ClientLayout';
+import { useUser } from '../../lib/supabase/UserContext';
 
-interface HeaderProps {
-  user: HeaderUser | null;
-  onLogout: () => void;
-}
-export function Header({
-  user,
-  onLogout
-}: HeaderProps) {
+/**
+ * Site header with navigation, user menu, and premium badge.
+ * Consumes auth state from UserContext via useUser().
+ */
+export function Header() {
+  const { user, signOut } = useUser();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -156,7 +154,7 @@ export function Header({
                         </Link>
                         <button
                       onClick={() => {
-                        onLogout();
+                        signOut();
                         setShowUserMenu(false);
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2">
@@ -252,7 +250,7 @@ export function Header({
 
                   <button
                 onClick={() => {
-                  onLogout();
+                  signOut();
                   setIsMenuOpen(false);
                 }}
                 className="w-full px-4 py-3 text-sm font-bold text-red-600 border border-red-200 rounded-md text-center hover:bg-red-50">

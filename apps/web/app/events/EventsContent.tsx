@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useUser } from '../../lib/supabase/UserContext';
 
 // ─── Type Definitions ────────────────────────────────────────
 interface Event {
@@ -42,9 +43,8 @@ export function EventsContent({ events }: EventsContentProps) {
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
   const [registeredEvents, setRegisteredEvents] = useState<string[]>([]);
 
-  // TODO: Replace with actual user authentication (Supabase/NextAuth)
-  const user: { name: string; email: string; plan: 'free' | 'premium' } | null =
-    null;
+  // Auth state from UserContext
+  const { user } = useUser();
 
   const handleRegisterClick = (event: Event) => {
     if (!user) {

@@ -42,13 +42,7 @@ interface ArticleContentProps {
   relatedArticles: RelatedArticle[];
 }
 
-import type { Enums } from '../../../lib/supabase/database.types';
-
-interface UserType {
-  name: string;
-  email: string;
-  plan: Enums<'user_plan'>;
-}
+import { useUser } from '../../../lib/supabase/UserContext';
 
 // ─── Portable Text Components ────────────────────────────────
 /**
@@ -122,16 +116,15 @@ const portableTextComponents = {
 
 // ─── Main Component ──────────────────────────────────────────
 export function ArticleContent({ article, relatedArticles }: ArticleContentProps) {
-  // TODO: Replace with actual user authentication (Supabase/NextAuth)
-  const user: UserType | null = null;
+  const { user } = useUser();
 
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [article.slug]);
 
-  // Paywall Logic: Check article.premium flag
-  const isLocked = article.premium === true && !user;
+  // Paywall: premium articles are locked unless user has a premium plan
+  const isLocked = article.premium && (!user || user.plan !== 'premium');
 
   return (
     <motion.div

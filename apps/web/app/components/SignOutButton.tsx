@@ -2,20 +2,15 @@
 
 import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useUser } from '../../lib/supabase/UserContext';
 
-import { createClient } from '../../lib/supabase/client';
-
+/** Sign-out button used on the profile page and elsewhere. */
 export function SignOutButton() {
   const router = useRouter();
+  const { signOut } = useUser();
 
   const handleSignOut = async () => {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      router.push('/');
-      return;
-    }
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
+    await signOut();
     router.push('/');
     router.refresh();
   };
