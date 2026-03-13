@@ -37,9 +37,10 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // getClaims() validates the JWT locally (signature + expiry) without a network
+  // call to Supabase Auth, making it much faster than getUser(). Safe against
+  // spoofing because it verifies the RS256 signature with the project's public keys.
+  const { data, error } = await supabase.auth.getClaims();
 
   const pathname = request.nextUrl.pathname;
   const isProtectedPath = PROTECTED_PATHS.some(
@@ -47,7 +48,7 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Redirect unauthenticated users trying to access protected paths to the sign-in page
-  if (isProtectedPath && !user) {
+  if (isProtectedPath && (!data?.claims || error)) {
     const url = request.nextUrl.clone();
     url.pathname = '/signin';
     url.searchParams.set('next', pathname);
@@ -55,7 +56,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Redirect authenticated users away from the sign-in page to the homepage or their intended destination
-  if (pathname === '/signin' && user) {
+  if (pathname === '/signin' && data?.claims) {
     const next = request.nextUrl.searchParams.get('next');
     const url = request.nextUrl.clone();
     url.pathname = next || '/';
