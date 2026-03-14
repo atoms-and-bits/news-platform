@@ -22,6 +22,7 @@ export default async function EventsPage() {
     time: event.time || '',
     location: event.location,
     venue: event.venue || '',
+    capacity: event.capacity ?? null,
     description: event.description || '',
     premium: event.premium || false,
   }));

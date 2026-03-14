@@ -8,6 +8,8 @@ import type { Enums } from './database.types';
 // ─── Types ───────────────────────────────────────────────────
 /** Authenticated user info available throughout the app via useUser() */
 export interface AppUser {
+  /** Supabase auth UUID — needed for RPC calls like event RSVPs */
+  id: string;
   name: string;
   email: string;
   plan: Enums<'user_plan'>;
@@ -76,6 +78,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       if (!isMounted) return;
 
       setUser({
+        id: authUser.id,
         name: profile?.full_name || authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Member',
         email: authUser.email || '',
         plan: profile?.plan === 'premium' ? 'premium' : 'free',

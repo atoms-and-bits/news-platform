@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { updateSession } from './lib/supabase/middleware';
 
 // Middleware to handle authentication and session updates for protected routes
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   return updateSession(request);
 }
 

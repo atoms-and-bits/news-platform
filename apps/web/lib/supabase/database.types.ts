@@ -144,6 +144,8 @@ export type Database = {
       }
       startups: {
         Row: {
+          contact_email: string | null
+          contact_name: string | null
           created_at: string
           description: string
           founded: string | null
@@ -165,6 +167,8 @@ export type Database = {
           website: string | null
         }
         Insert: {
+          contact_email?: string | null
+          contact_name?: string | null
           created_at?: string
           description: string
           founded?: string | null
@@ -186,6 +190,8 @@ export type Database = {
           website?: string | null
         }
         Update: {
+          contact_email?: string | null
+          contact_name?: string | null
           created_at?: string
           description?: string
           founded?: string | null
@@ -308,12 +314,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cancel_event_rsvp: {
+        Args: { p_event_id: string; p_user_id: string }
+        Returns: {
+          result_status: string
+          success: boolean
+        }[]
+      }
       get_event_rsvp_count: { Args: { event_id: string }; Returns: number }
       rsvp_to_event: {
         Args: { p_capacity: number; p_event_id: string; p_user_id: string }
         Returns: {
+          result_status: string
           spots_remaining: number
-          status: string
           success: boolean
         }[]
       }

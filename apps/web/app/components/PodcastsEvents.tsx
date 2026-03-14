@@ -28,6 +28,7 @@ interface Event {
   time: string;
   location: string;
   venue: string;
+  capacity?: number | null;
   description: string;
   premium: boolean;
 }

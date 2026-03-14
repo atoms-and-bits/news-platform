@@ -61,7 +61,7 @@ export function StartupsContent({ startups }: StartupsContentProps) {
           </p>
 
           {/* Search Bar */}
-          <div className="max-w-xl mx-auto relative">
+          <div className="max-w-xl mx-auto relative mb-6">
             <Search className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
             <input
               type="text"
@@ -71,6 +71,13 @@ export function StartupsContent({ startups }: StartupsContentProps) {
               className="w-full pl-12 pr-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2f3192] shadow-lg"
             />
           </div>
+
+          <Link
+            href="/submit-startup"
+            className="inline-block px-6 py-2.5 bg-white/10 text-white font-bold text-sm rounded-lg border border-white/20 hover:bg-white/20 transition-colors"
+          >
+            + Submit Your Startup
+          </Link>
         </div>
       </div>
 
