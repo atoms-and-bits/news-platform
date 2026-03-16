@@ -7,11 +7,16 @@ import {
   CheckCircle,
   CreditCard,
   Smartphone,
+  Phone,
+  Loader2,
+  AlertCircle,
+  Shield,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useUser } from '../../lib/supabase/UserContext';
 
-/** Features included in the Premium plan */
 const PREMIUM_FEATURES = [
   'Unlimited article access',
   'Deep-dive analysis & reports',
@@ -21,28 +26,273 @@ const PREMIUM_FEATURES = [
   'Ad-free experience',
 ];
 
-const PREMIUM_PRICE = '18,000';
+// TODO: Change back to '18,000' before launch
+const PREMIUM_PRICE = '500';
+
+const inputClass =
+  'w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192] outline-none transition-colors';
 
 export default function SubscribePage() {
   const router = useRouter();
+  const { user, isLoading: authLoading } = useUser();
+
   const [step, setStep] = useState<'info' | 'checkout'>('info');
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  // Checkout form state
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'mobile'>('mobile');
-  const [mobileProvider, setMobileProvider] = useState<'mpesa' | 'mixx' | 'airtel'>('mpesa');
 
-  const handleConfirmPayment = (e: React.FormEvent) => {
+  // Phone number (used for both mobile and card payments)
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  // Card billing fields
+  const [billingAddress, setBillingAddress] = useState('');
+  const [billingCity, setBillingCity] = useState('');
+  const [billingState, setBillingState] = useState('');
+  const [billingPostcode, setBillingPostcode] = useState('');
+  const [billingCountry, setBillingCountry] = useState('TZ');
+
+  // Submission state
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [mobileSuccess, setMobileSuccess] = useState(false);
+  const [paymentReference, setPaymentReference] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verified, setVerified] = useState(false);
+
+  const handleConfirmPayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Integrate with payment provider
-    setShowSuccess(true);
-    setTimeout(() => {
-      router.push('/');
-    }, 2500);
+    setError(null);
+
+    if (!user) {
+      setError('You must be signed in to subscribe.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      let body: Record<string, unknown>;
+
+      if (paymentMethod === 'mobile') {
+        // Normalize Tanzanian phone number
+        let phone = phoneNumber.replace(/[\s-]/g, '');
+        if (phone.startsWith('0')) {
+          phone = '255' + phone.slice(1);
+        } else if (phone.startsWith('+')) {
+          phone = phone.slice(1);
+        }
+
+        if (!/^255\d{9}$/.test(phone)) {
+          setError(
+            'Enter a valid Tanzanian phone number (e.g. 0781000000 or 255781000000).'
+          );
+          setIsSubmitting(false);
+          return;
+        }
+
+        body = { payment_type: 'mobile', phone_number: phone };
+      } else {
+        // Normalize phone number for card payment
+        let cardPhone = phoneNumber.replace(/[\s-]/g, '');
+        if (cardPhone.startsWith('0')) {
+          cardPhone = '255' + cardPhone.slice(1);
+        } else if (cardPhone.startsWith('+')) {
+          cardPhone = cardPhone.slice(1);
+        }
+
+        if (!/^255\d{9}$/.test(cardPhone)) {
+          setError(
+            'Enter a valid Tanzanian phone number (e.g. 0781000000 or 255781000000).'
+          );
+          setIsSubmitting(false);
+          return;
+        }
+
+        if (!billingAddress || !billingCity || !billingState || !billingPostcode || !billingCountry) {
+          setError('All billing address fields are required for card payments.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        body = {
+          payment_type: 'card',
+          phone_number: cardPhone,
+          billing: {
+            address: billingAddress,
+            city: billingCity,
+            state: billingState,
+            postcode: billingPostcode,
+            country: billingCountry,
+          },
+        };
+      }
+
+      const res = await fetch('/api/payments/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Payment failed. Please try again.');
+        return;
+      }
+
+      setPaymentReference(data.reference);
+
+      if (paymentMethod === 'card' && data.payment_url) {
+        // Redirect to Snippe's hosted checkout for card entry
+        window.location.href = data.payment_url;
+      } else {
+        // Mobile money — USSD push sent
+        setMobileSuccess(true);
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const handleVerifyPayment = async () => {
+    if (!paymentReference) return;
+    setIsVerifying(true);
+    try {
+      const res = await fetch('/api/payments/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reference: paymentReference }),
+      });
+      const data = await res.json();
+      if (data.status === 'activated') {
+        setVerified(true);
+        setTimeout(() => router.push('/profile'), 2000);
+      } else {
+        setError(
+          data.message || 'Payment not yet completed. Please complete the USSD prompt on your phone.'
+        );
+      }
+    } catch {
+      setError('Could not verify payment. Please try again.');
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  // Auth gate
+  if (!authLoading && !user) {
+    return (
+      <div className="relative">
+        <div className="bg-[#000137] text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 text-center">
+            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-6">
+              Upgrade to Premium
+            </h1>
+            <p className="text-white/70 text-xl max-w-2xl mx-auto">
+              Sign in to get started with your Premium subscription.
+            </p>
+          </div>
+        </div>
+        <div className="max-w-md mx-auto px-4 -mt-8 pb-20 text-center">
+          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Shield className="w-8 h-8 text-gray-400" />
+            </div>
+            <p className="text-gray-600 mb-6">
+              Create an account or sign in to upgrade to Premium.
+            </p>
+            <Link
+              href="/signin?next=/subscribe"
+              className="inline-block bg-[#000137] text-white font-bold px-8 py-3 rounded-lg hover:bg-[#2f3192] transition-colors"
+            >
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Mobile success — USSD push sent
+  if (mobileSuccess) {
+    return (
+      <div className="relative">
+        <div className="bg-[#000137] text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 text-center">
+            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-6">
+              {verified ? 'Welcome Aboard!' : 'Check Your Phone'}
+            </h1>
+          </div>
+        </div>
+        <div className="max-w-md mx-auto px-4 -mt-8 pb-20">
+          <div className="bg-white rounded-2xl shadow-lg p-8 text-center border border-gray-100">
+            {verified ? (
+              <>
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="w-10 h-10 text-green-600" />
+                </div>
+                <p className="text-gray-600 mb-6">
+                  Your Premium subscription is now active. Enjoy full access to
+                  Atoms & Bits.
+                </p>
+                <p className="text-sm text-gray-400">Redirecting to your profile...</p>
+              </>
+            ) : (
+              <>
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Phone className="w-10 h-10 text-green-600" />
+                </div>
+                <p className="text-gray-600 mb-4">
+                  A USSD prompt has been sent to your phone. Enter your mobile money
+                  PIN to complete the payment of{' '}
+                  <span className="font-bold text-[#000137]">TSh {PREMIUM_PRICE}</span>.
+                </p>
+                <p className="text-sm text-gray-500 mb-8">
+                  After completing payment on your phone, tap the button below to
+                  activate your subscription.
+                </p>
+
+                {/* Error from verification */}
+                {error && (
+                  <div className="mb-4 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-left">
+                    <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <button
+                    onClick={handleVerifyPayment}
+                    disabled={isVerifying}
+                    className="w-full bg-[#000137] text-white font-bold py-3 rounded-lg hover:bg-[#2f3192] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {isVerifying ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Verifying...
+                      </>
+                    ) : (
+                      "I've Completed Payment"
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileSuccess(false);
+                      setError(null);
+                      setPaymentReference(null);
+                    }}
+                    className="w-full text-gray-500 font-medium py-3 hover:text-[#000137] transition-colors"
+                  >
+                    Try again with different number
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
@@ -131,62 +381,30 @@ export default function SubscribePage() {
 
               <div className="mt-8 bg-blue-50 p-4 rounded-lg border border-blue-100">
                 <p className="text-xs text-blue-800 leading-relaxed">
-                  You will be charged TSh {PREMIUM_PRICE} immediately. Your
-                  subscription will renew automatically every month. Cancel
-                  anytime.
+                  You will be charged TSh {PREMIUM_PRICE}. Your subscription
+                  lasts 30 days. Renew anytime from your profile.
                 </p>
               </div>
             </div>
 
-            {/* Checkout Form */}
+            {/* Payment Form */}
             <div className="p-8 md:w-2/3">
-              <form onSubmit={handleConfirmPayment}>
-                <div className="mb-8">
-                  <h3 className="font-serif text-xl font-bold text-[#000137] mb-4">
-                    Create Account
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
-                      />
-                    </div>
-                  </div>
-                </div>
+              {/* Error banner */}
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="mb-6 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg"
+                  >
+                    <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
+                    <p className="text-sm">{error}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
+              <form onSubmit={handleConfirmPayment}>
                 {/* Payment Method Selection */}
                 <div className="mb-8">
                   <h3 className="font-serif text-xl font-bold text-[#000137] mb-4">
@@ -220,105 +438,145 @@ export default function SubscribePage() {
 
                   {paymentMethod === 'mobile' ? (
                     <div className="space-y-4">
-                      {/* Mobile Money Provider Selection */}
-                      <div className="grid grid-cols-3 gap-3">
-                        <button
-                          type="button"
-                          onClick={() => setMobileProvider('mpesa')}
-                          className={`p-3 rounded-lg border flex flex-col items-center gap-2 transition-all ${
-                            mobileProvider === 'mpesa'
-                              ? 'border-red-500 bg-red-50'
-                              : 'border-gray-200 hover:bg-gray-50'
-                          }`}
-                        >
-                          <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xs">
-                            M
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">M-Pesa</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setMobileProvider('mixx')}
-                          className={`p-3 rounded-lg border flex flex-col items-center gap-2 transition-all ${
-                            mobileProvider === 'mixx'
-                              ? 'border-purple-500 bg-purple-50'
-                              : 'border-gray-200 hover:bg-gray-50'
-                          }`}
-                        >
-                          <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-xs">
-                            Y
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">Mixx</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setMobileProvider('airtel')}
-                          className={`p-3 rounded-lg border flex flex-col items-center gap-2 transition-all ${
-                            mobileProvider === 'airtel'
-                              ? 'border-red-500 bg-red-50'
-                              : 'border-gray-200 hover:bg-gray-50'
-                          }`}
-                        >
-                          <div className="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center font-bold text-xs">
-                            A
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">Airtel</span>
-                        </button>
-                      </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Phone Number
+                          Phone Number *
                         </label>
                         <input
                           type="tel"
-                          placeholder="+255..."
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
+                          required
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          placeholder="e.g. 0781 000 000"
+                          className={inputClass}
                         />
                       </div>
+                      <p className="text-xs text-gray-400">
+                        Works with M-Pesa, Airtel Money, Tigo Pesa (Mixx by Yas), and
+                        Halotel. A USSD push will be sent to your phone.
+                      </p>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Card Number
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          placeholder="e.g. 0781 000 000"
+                          className={inputClass}
+                        />
+                        <p className="text-xs text-gray-400 mt-1">
+                          Tanzanian number for payment verification.
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Billing Address *
                         </label>
                         <input
                           type="text"
-                          placeholder="0000 0000 0000 0000"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
+                          required
+                          value={billingAddress}
+                          onChange={(e) => setBillingAddress(e.target.value)}
+                          placeholder="Street address"
+                          className={inputClass}
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Expiry
+                            City *
                           </label>
                           <input
                             type="text"
-                            placeholder="MM/YY"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
+                            required
+                            value={billingCity}
+                            onChange={(e) => setBillingCity(e.target.value)}
+                            placeholder="e.g. Dar es Salaam"
+                            className={inputClass}
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            CVC
+                            State / Region *
                           </label>
                           <input
                             type="text"
-                            placeholder="123"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192]"
+                            required
+                            value={billingState}
+                            onChange={(e) => setBillingState(e.target.value)}
+                            placeholder="e.g. Dar es Salaam"
+                            className={inputClass}
                           />
                         </div>
                       </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Postcode / ZIP *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={billingPostcode}
+                            onChange={(e) => setBillingPostcode(e.target.value)}
+                            placeholder="e.g. 11101"
+                            className={inputClass}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Country *
+                          </label>
+                          <select
+                            required
+                            value={billingCountry}
+                            onChange={(e) => setBillingCountry(e.target.value)}
+                            className={inputClass}
+                          >
+                            <option value="TZ">Tanzania</option>
+                            <option value="KE">Kenya</option>
+                            <option value="UG">Uganda</option>
+                            <option value="RW">Rwanda</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="GH">Ghana</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="US">United States</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="CA">Canada</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="IN">India</option>
+                            <option value="AE">UAE</option>
+                          </select>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-400">
+                        You will be redirected to a secure checkout page to enter
+                        your card details.
+                      </p>
                     </div>
                   )}
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#000137] text-white font-bold rounded-lg hover:bg-[#2f3192] transition-colors shadow-md text-lg"
+                  disabled={isSubmitting || authLoading}
+                  className="w-full py-4 bg-[#000137] text-white font-bold rounded-lg hover:bg-[#2f3192] transition-colors shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  CONFIRM PAYMENT
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    'CONFIRM PAYMENT'
+                  )}
                 </button>
               </form>
             </div>
@@ -326,14 +584,13 @@ export default function SubscribePage() {
         )}
 
         <p className="text-center text-gray-500 text-sm mt-8">
-          Secure payment processing. You can cancel your subscription at any
-          time.
+          Secure payment processing powered by Snippe. Cancel anytime from your profile.
         </p>
       </div>
 
-      {/* Success Overlay */}
+      {/* Success Overlay — for card payments returning via redirect */}
       <AnimatePresence>
-        {showSuccess && (
+        {false && (
           <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
             <motion.div
               initial={{ opacity: 0 }}
