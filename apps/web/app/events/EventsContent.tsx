@@ -344,7 +344,7 @@ export function EventsContent({ events }: EventsContentProps) {
                     <div className="flex gap-2 flex-wrap justify-end">
                       {event.premium && (
                         <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1">
-                          <Lock className="w-3 h-3" /> PREMIUM
+                          {isLocked && <Lock className="w-3 h-3" />} PREMIUM
                         </span>
                       )}
                       {isFull && !isRegistered && (

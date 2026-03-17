@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Lock } from 'lucide-react';
+import { PremiumBadge } from './PremiumBadge';
 interface ArticleCardProps {
   category: string;
   title: string;
@@ -35,12 +35,8 @@ export function ArticleCard({
       }}
       onClick={onClick}>
 
-      {/* Premium Badge */}
-      {premium &&
-      <div className="absolute top-4 right-4 z-20 bg-amber-400 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-md">
-          <Lock className="w-3 h-3" /> PREMIUM
-        </div>
-      }
+      {/* Premium Badge - hidden for premium users */}
+      {premium && <PremiumBadge />}
 
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">

@@ -206,6 +206,11 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
             <span className="text-xs font-bold text-[#2f3192] bg-[#2f3192]/10 px-2 py-1 rounded-md uppercase tracking-wider">
               {article.category}
             </span>
+            {article.premium && (
+              <span className="text-xs font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1">
+                {isLocked && <Lock className="w-3 h-3" />} Premium
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -287,18 +292,29 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
                   <p className="text-gray-600 mb-6">
                     This deep-dive analysis is available exclusively to Premium members.
                   </p>
-                  <Link
-                    href="/subscribe"
-                    className="block w-full bg-[#000137] text-white font-bold py-3 rounded-lg hover:bg-[#2f3192] transition-colors mb-3"
-                  >
-                    UPGRADE TO PREMIUM
-                  </Link>
-                  <p className="text-xs text-gray-500">
-                    Already a member?{' '}
-                    <Link href="/signin" className="text-[#2f3192] font-bold hover:underline">
-                      Sign in
+                  {user ? (
+                    <Link
+                      href="/subscribe"
+                      className="block w-full bg-[#000137] text-white font-bold py-3 rounded-lg hover:bg-[#2f3192] transition-colors"
+                    >
+                      UPGRADE TO PREMIUM
                     </Link>
-                  </p>
+                  ) : (
+                    <>
+                      <Link
+                        href="/signin?mode=signup"
+                        className="block w-full bg-[#000137] text-white font-bold py-3 rounded-lg hover:bg-[#2f3192] transition-colors mb-3"
+                      >
+                        SIGN UP FOR FREE
+                      </Link>
+                      <p className="text-xs text-gray-500">
+                        Already a member?{' '}
+                        <Link href="/signin" className="text-[#2f3192] font-bold hover:underline">
+                          Sign in
+                        </Link>
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
             </>
