@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { UserProvider } from '../../lib/supabase/UserContext';
+import { SignUpPrompt } from './SignUpPrompt';
 
 /**
  * Root client layout wrapper.
@@ -23,6 +24,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         {!isAuthPage && <Header />}
         <div className="flex-1">{children}</div>
         {!isAuthPage && <Footer />}
+        {!isAuthPage && <SignUpPrompt />}
       </div>
     </UserProvider>
   );

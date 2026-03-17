@@ -1,10 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { User, Mail, CreditCard, Shield } from 'lucide-react';
+import { User, Mail, CreditCard, Shield, Bookmark } from 'lucide-react';
 import { redirect } from 'next/navigation';
 
 import { createClient } from '../../lib/supabase/server';
 import { SignOutButton } from '../components/SignOutButton';
+import { getArticlesByIds } from '../../lib/sanity/queries';
+import { formatRelativeTime } from '../../lib/utils/dateHelpers';
+import { urlFor } from '../../lib/sanity/image';
 import type { Enums } from '../../lib/supabase/database.types';
 
 /** Safely resolve a plan value from the database, defaulting to 'free' */
@@ -34,6 +37,19 @@ export default async function ProfilePage() {
     .select('full_name, plan')
     .eq('id', user.id)
     .maybeSingle();
+
+  // Fetch bookmarks
+  const { data: bookmarks } = await supabase
+    .from('bookmarks')
+    .select('sanity_document_id, document_type, created_at')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+
+  const articleBookmarkIds = (bookmarks ?? [])
+    .filter((b) => b.document_type === 'article')
+    .map((b) => b.sanity_document_id);
+
+  const bookmarkedArticles = await getArticlesByIds(articleBookmarkIds);
 
   const displayName =
     profile?.full_name ||
@@ -113,6 +129,48 @@ export default async function ProfilePage() {
                   </Link>
                 )}
               </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <Bookmark className="w-4 h-4" />
+                Bookmarked Articles
+              </h3>
+              {bookmarkedArticles.length === 0 ? (
+                <div className="text-center py-8 bg-gray-50 rounded-xl border border-gray-100">
+                  <Bookmark className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+                  <p className="text-gray-500 text-sm">No bookmarked articles yet.</p>
+                  <Link href="/latest" className="text-sm text-[#2f3192] font-medium hover:underline mt-1 inline-block">
+                    Browse articles
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {bookmarkedArticles.map((article) => (
+                    <Link
+                      key={article._id}
+                      href={`/article/${article.slug.current}`}
+                      className="flex gap-4 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#2f3192]/30 hover:bg-white transition-colors group"
+                    >
+                      {article.mainImage && (
+                        <img
+                          src={urlFor(article.mainImage).width(120).height(80).url()}
+                          alt={article.title}
+                          className="w-20 h-14 object-cover rounded-md flex-shrink-0"
+                        />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[#2f3192] text-[10px] font-bold uppercase">{article.category}</span>
+                        <h4 className="text-sm font-bold text-[#000137] group-hover:text-[#2f3192] transition-colors line-clamp-1">
+                          {article.title}
+                        </h4>
+                        <p className="text-xs text-gray-500 line-clamp-1">{article.excerpt}</p>
+                        <span className="text-[10px] text-gray-400 mt-1 block">{formatRelativeTime(article.publishedAt)}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="pt-4 border-t border-gray-100">

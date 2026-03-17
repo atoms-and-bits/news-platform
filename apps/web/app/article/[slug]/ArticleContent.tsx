@@ -5,10 +5,11 @@
  */
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, Calendar, User as UserIcon, Lock } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, User as UserIcon, Lock, Bookmark, BookmarkCheck } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 
 // ─── Type Definitions ────────────────────────────────────────
@@ -117,11 +118,57 @@ const portableTextComponents = {
 // ─── Main Component ──────────────────────────────────────────
 export function ArticleContent({ article, relatedArticles }: ArticleContentProps) {
   const { user } = useUser();
+  const router = useRouter();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [article.slug]);
+
+  // Check if article is bookmarked on mount
+  useEffect(() => {
+    if (!user) return;
+    const { createClient } = require('../../../lib/supabase/client') as typeof import('../../../lib/supabase/client');
+    const supabase = createClient();
+    supabase
+      .from('bookmarks')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('sanity_document_id', article.id)
+      .maybeSingle()
+      .then(({ data }: { data: { id: string } | null }) => {
+        setIsBookmarked(!!data);
+      });
+  }, [user, article.id]);
+
+  async function toggleBookmark() {
+    if (!user) {
+      router.push('/signin?mode=signup');
+      return;
+    }
+    if (bookmarkLoading) return;
+    setBookmarkLoading(true);
+    const { createClient } = await import('../../../lib/supabase/client');
+    const supabase = createClient();
+    if (isBookmarked) {
+      await supabase
+        .from('bookmarks')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('sanity_document_id', article.id);
+      setIsBookmarked(false);
+    } else {
+      await supabase.from('bookmarks').insert({
+        user_id: user.id,
+        sanity_document_id: article.id,
+        document_type: 'article' as const,
+      });
+      setIsBookmarked(true);
+    }
+    setBookmarkLoading(false);
+  }
 
   // Paywall: premium articles are locked unless user has a premium plan
   const isLocked = article.premium && (!user || user.plan !== 'premium');
@@ -136,14 +183,26 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
       {/* Navigation Bar */}
       <div className="sticky top-20 z-40 bg-white/95 backdrop-blur border-b border-gray-100 py-3">
         <div className="max-w-3xl mx-auto px-4 flex items-center justify-between">
-          <Link
-            href="/latest"
+          <button
+            onClick={() => router.back()}
             className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#000137] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
-          </Link>
-          <div className="flex gap-2">
+          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleBookmark}
+              disabled={bookmarkLoading}
+              className="text-gray-500 hover:text-[#2f3192] transition-colors disabled:opacity-50"
+              title={isBookmarked ? 'Remove bookmark' : 'Bookmark this article'}
+            >
+              {isBookmarked ? (
+                <BookmarkCheck className="w-5 h-5 text-[#2f3192]" />
+              ) : (
+                <Bookmark className="w-5 h-5" />
+              )}
+            </button>
             <span className="text-xs font-bold text-[#2f3192] bg-[#2f3192]/10 px-2 py-1 rounded-md uppercase tracking-wider">
               {article.category}
             </span>

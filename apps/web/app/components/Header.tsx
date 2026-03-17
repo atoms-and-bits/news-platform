@@ -24,7 +24,7 @@ export function Header() {
   {
     name: 'Featured',
     id: 'featured',
-    href: '/'
+    href: '/featured'
   },
   {
     name: 'Weekly Roundups',
@@ -173,9 +173,9 @@ export function Header() {
                     SIGN IN
                   </Link>
                   <Link
-                  href="/subscribe"
+                  href="/signin?mode=signup"
                   className="px-4 py-2 text-sm font-bold text-white bg-[#000137] rounded-md hover:bg-[#2f3192] transition-colors shadow-sm">
-                    SUBSCRIBE
+                    SIGN UP
                   </Link>
                 </>
               }
@@ -267,10 +267,10 @@ export function Header() {
                     SIGN IN
                   </Link>
                   <Link
-                href="/subscribe"
+                href="/signin?mode=signup"
                 onClick={() => setIsMenuOpen(false)}
                 className="block w-full px-4 py-3 text-sm font-bold text-white bg-[#000137] rounded-md text-center">
-                    SUBSCRIBE
+                    SIGN UP
                   </Link>
                 </>
             }

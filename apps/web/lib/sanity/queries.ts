@@ -31,6 +31,18 @@ export async function getFeaturedArticles(): Promise<SanityArticle[]> {
   );
 }
 
+/** Fetch articles by an array of Sanity document IDs */
+export async function getArticlesByIds(ids: string[]): Promise<SanityArticle[]> {
+  if (ids.length === 0) return [];
+  return client.fetch(
+    `*[_type == "article" && _id in $ids] | order(publishedAt desc) {
+      _id, title, slug, category, excerpt,
+      author, publishedAt, mainImage
+    }`,
+    { ids }
+  );
+}
+
 /** Fetch a single article by its slug */
 export async function getArticleBySlug(
   slug: string
