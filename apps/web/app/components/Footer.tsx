@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Twitter, Linkedin, Rss, Mail } from 'lucide-react';
+import { FooterCTA } from './FooterCTA';
 
 export function Footer() {
   return (
@@ -40,7 +41,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/"
+                  href="/featured"
                   className="hover:text-white transition-colors">
                   Featured Stories
                 </Link>
@@ -131,21 +132,7 @@ export function Footer() {
                 <Rss className="w-5 h-5" />
               </a>
             </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <p className="text-xs text-white/60 mb-2 font-sans">
-                Subscribe to our daily briefing
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="bg-transparent border-b border-white/20 text-sm text-white w-full focus:outline-none focus:border-white py-1" />
-
-                <button className="text-white hover:text-[#a5a6ff]">
-                  <ArrowRightIcon className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
+            <FooterCTA />
           </div>
         </div>
 
@@ -162,24 +149,5 @@ export function Footer() {
         </div>
       </div>
     </footer>);
-
-}
-function ArrowRightIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round">
-
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>);
 
 }

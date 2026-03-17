@@ -8,6 +8,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArticleListCard } from '../components/ArticleListCard';
 import { TopHeadlines } from '../components/TopHeadlines';
+import { SidebarCTA } from '../components/SidebarCTA';
 import { getAllArticles } from '../../lib/sanity/queries';
 import { formatRelativeTime } from '../../lib/utils/dateHelpers';
 import { urlFor } from '../../lib/sanity/image';
@@ -76,23 +77,7 @@ export default async function LatestPage() {
             <div className="sticky top-24">
               <TopHeadlines />
 
-              {/* Newsletter Box (Mini) */}
-              <div className="mt-8 bg-[#2f3192] rounded-xl p-6 text-center text-white">
-                <h3 className="font-serif font-bold text-xl mb-2">
-                  Daily Briefing
-                </h3>
-                <p className="text-sm text-white/80 mb-4 font-sans">
-                  Get the most important tech news from Tanzania delivered to
-                  your inbox every morning.
-                </p>
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="w-full px-4 py-2 rounded-md text-[#000137] text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-white/50" />
-                <button className="w-full py-2 bg-[#000137] text-white font-bold text-sm rounded-md hover:bg-[#000137]/80 transition-colors">
-                  SUBSCRIBE
-                </button>
-              </div>
+              <SidebarCTA />
             </div>
           </div>
         </div>
