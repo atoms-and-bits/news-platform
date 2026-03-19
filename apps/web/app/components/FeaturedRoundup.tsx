@@ -38,7 +38,7 @@ export function FeaturedRoundup({ editorPicks, roundupStories }: FeaturedRoundup
               <span className="w-8 h-1 bg-[#2f3192] rounded-full"></span>
               Editor's Picks
             </h2>
-            <div className="space-y-8">
+            <div className="flex flex-col gap-10">
               {editorPicks.map((article) => (
                 <Link key={article.id} href={`/article/${article.slug}`}>
                   <ArticleCard

@@ -13,7 +13,7 @@ import {
 } from '../../../../lib/snippe/client';
 
 // TODO: Change back to 18_000 before launch
-const PREMIUM_PRICE_TZS = 500;
+const PREMIUM_PRICE_TZS = 1000;
 
 interface MobilePaymentBody {
   payment_type: 'mobile';

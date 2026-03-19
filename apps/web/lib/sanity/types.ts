@@ -39,6 +39,8 @@ export interface SanityArticle {
   mainImage?: SanityImageSource;
   body: any[]; // Portable Text blocks
   featured?: boolean;
+  editorsPick?: boolean;
+  weeklyRoundup?: boolean;
   premium?: boolean;
 }
 

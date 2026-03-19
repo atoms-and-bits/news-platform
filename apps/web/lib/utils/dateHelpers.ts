@@ -31,10 +31,11 @@ export function formatRelativeTime(isoDate: string): string {
     return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`
   } else if (diffDays < 7) {
     return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`
-  } else if (diffWeeks < 4) {
+  } else if (diffWeeks < 5) {
     return `${diffWeeks} ${diffWeeks === 1 ? 'week' : 'weeks'} ago`
   } else if (diffMonths < 12) {
-    return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'} ago`
+    const months = diffMonths < 1 ? 1 : diffMonths
+    return `${months} ${months === 1 ? 'month' : 'months'} ago`
   } else {
     // For very old dates, show the actual date
     return date.toLocaleDateString('en-US', {

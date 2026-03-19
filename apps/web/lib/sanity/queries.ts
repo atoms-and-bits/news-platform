@@ -15,7 +15,27 @@ export async function getAllArticles(): Promise<SanityArticle[]> {
       _id, _createdAt, _updatedAt,
       title, slug, category, excerpt,
       author, authorRole, publishedAt, readTime,
-      mainImage, featured, premium
+      mainImage, featured, editorsPick, premium
+    }`
+  );
+}
+
+/** Fetch editor's picks (latest 2 articles marked as editorsPick) */
+export async function getEditorsPicks(): Promise<SanityArticle[]> {
+  return client.fetch(
+    `*[_type == "article" && editorsPick == true] | order(publishedAt desc)[0...2] {
+      _id, title, slug, category, excerpt,
+      author, publishedAt, mainImage, premium
+    }`
+  );
+}
+
+/** Fetch weekly roundup articles (latest 3 marked as weeklyRoundup) */
+export async function getRoundupArticles(): Promise<SanityArticle[]> {
+  return client.fetch(
+    `*[_type == "article" && weeklyRoundup == true] | order(publishedAt desc)[0...3] {
+      _id, title, slug, category, excerpt,
+      author, publishedAt, mainImage, premium
     }`
   );
 }

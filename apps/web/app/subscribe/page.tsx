@@ -27,7 +27,7 @@ const PREMIUM_FEATURES = [
 ];
 
 // TODO: Change back to '18,000' before launch
-const PREMIUM_PRICE = '500';
+const PREMIUM_PRICE = '1000';
 
 const inputClass =
   'w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192] outline-none transition-colors';

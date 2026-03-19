@@ -6,22 +6,17 @@
 
 import React from 'react';
 import { ArticleListCard } from '../components/ArticleListCard';
-import { getAllArticles } from '../../lib/sanity/queries';
+import { getRoundupArticles } from '../../lib/sanity/queries';
 import { formatRelativeTime } from '../../lib/utils/dateHelpers';
 import { urlFor } from '../../lib/sanity/image';
 
 // ─── Server Component ────────────────────────────────────────
 export default async function RoundupsPage() {
   // Fetch all articles from Sanity
-  const sanityArticles = await getAllArticles();
+  const sanityRoundupArticles = await getRoundupArticles();
 
   // Filter for roundup articles (articles with "roundup" in category or title)
-  const roundupArticles = sanityArticles
-    .filter(
-      (article) =>
-        article.category.toLowerCase().includes('roundup') ||
-        article.title.toLowerCase().includes('roundup')
-    )
+  const roundupArticles = sanityRoundupArticles
     .map((article) => ({
       id: article._id,
       slug: article.slug.current,

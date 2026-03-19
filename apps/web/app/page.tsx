@@ -11,15 +11,17 @@ import { PodcastsEvents } from './components/PodcastsEvents';
 import { NewsletterBanner } from './components/NewsletterBanner';
 import { Testimonials } from './components/Testimonials';
 import { ArrowRight } from 'lucide-react';
-import { getAllArticles, getAllPodcasts, getAllEvents } from '../lib/sanity/queries';
+import { getAllArticles, getEditorsPicks, getRoundupArticles, getAllPodcasts, getAllEvents } from '../lib/sanity/queries';
 import { formatRelativeTime } from '../lib/utils/dateHelpers';
 import { urlFor } from '../lib/sanity/image';
 
 // ─── Server Component ────────────────────────────────────────
 export default async function Home() {
   // Fetch all data from Sanity in parallel
-  const [sanityArticles, sanityPodcasts, sanityEvents] = await Promise.all([
+  const [sanityArticles, sanityEditorsPicks, sanityRoundupArticles, sanityPodcasts, sanityEvents] = await Promise.all([
     getAllArticles(),
+    getEditorsPicks(),
+    getRoundupArticles(),
     getAllPodcasts(),
     getAllEvents(),
   ]);
@@ -45,9 +47,9 @@ export default async function Home() {
   // LatestPreview: Next 4 articles (4-7)
   const latestArticles = sanityArticles.slice(3, 7).map(transformArticle);
 
-  // FeaturedRoundup: Editor picks (8-9) + Roundup stories (10-12)
-  const editorPicks = sanityArticles.slice(7, 9).map(transformArticle);
-  const roundupStories = sanityArticles.slice(9, 12).map(transformArticle);
+  // FeaturedRoundup: Editor picks + Weekly roundup from Sanity
+  const editorPicks = sanityEditorsPicks.map(transformArticle);
+  const roundupStories = sanityRoundupArticles.map(transformArticle);
 
   // Transform podcasts (first 3)
   const podcasts = sanityPodcasts.slice(0, 3).map((podcast) => ({

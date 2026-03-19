@@ -74,10 +74,10 @@ export function HeroGrid({ articles }: HeroGridProps) {
 
         {/* Left Column - Anchor Story (50% width on desktop) */}
         <motion.div
-          className="lg:col-span-6 flex flex-col h-[500px] lg:h-[600px]"
+          className="lg:col-span-6 flex flex-col h-[500px] lg:h-[580px]"
           variants={item}>
 
-          <Link href={`/article/${anchorStory.slug}`}>
+          <Link href={`/article/${anchorStory.slug}`} className="h-full block">
             <ArticleCard
               category={anchorStory.category}
               title={anchorStory.title}

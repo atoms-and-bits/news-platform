@@ -124,6 +124,20 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'editorsPick',
+      title: "Editor's Pick",
+      type: 'boolean',
+      description: "Highlight this article in the Editor's Picks section on the homepage",
+      initialValue: false,
+    }),
+    defineField({
+      name: 'weeklyRoundup',
+      title: 'Weekly Roundup',
+      type: 'boolean',
+      description: 'Include this article in the Weekly Roundup section on the homepage',
+      initialValue: false,
+    }),
+    defineField({
       name: 'premium',
       title: 'Premium Content',
       type: 'boolean',
