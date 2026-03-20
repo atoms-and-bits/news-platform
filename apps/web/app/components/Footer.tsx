@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Twitter, Linkedin, Rss, Mail } from 'lucide-react';
+import { Linkedin, Instagram } from 'lucide-react';
+import Image from 'next/image';
 import { FooterCTA } from './FooterCTA';
 
 export function Footer() {
@@ -77,24 +78,19 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 font-sans text-sm text-white/70">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link href="/about" className="hover:text-white transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link href="/careers" className="hover:text-white transition-colors">
                   Careers
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link href="/contact" className="hover:text-white transition-colors">
                   Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Advertise
-                </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -114,22 +110,25 @@ export function Footer() {
             </h3>
             <div className="flex gap-4 mb-6">
               <a
-                href="#"
+                href="https://x.com/anbpost"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#2f3192] transition-colors text-white">
-
-                <Twitter className="w-5 h-5" />
+                <Image src="/icons/x.svg" alt="X" width={20} height={20} className="invert" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/company/anbpost/posts/?feedView=all"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#2f3192] transition-colors text-white">
-
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/anbpost_/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#2f3192] transition-colors text-white">
-
-                <Rss className="w-5 h-5" />
+                <Image src="/icons/instagram.svg" alt="Instagram" width={20} height={20} className="invert" />
               </a>
             </div>
             <FooterCTA />
