@@ -82,6 +82,13 @@ export async function POST(request: NextRequest) {
     const { data } = payload;
     const userId = data.metadata?.user_id;
 
+    // Validate user_id is a proper UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (userId && !uuidRegex.test(userId)) {
+      console.error(`Webhook rejected: invalid user_id format: ${userId}`);
+      return NextResponse.json({ error: 'Invalid metadata.' }, { status: 400 });
+    }
+
     console.log(`Snippe webhook: ${event} | ref=${data.reference} | user=${userId}`);
 
     // 4. Handle payment.completed

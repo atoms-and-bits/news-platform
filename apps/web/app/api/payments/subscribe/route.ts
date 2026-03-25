@@ -12,6 +12,7 @@ import {
   createCardPayment,
   SnippeError,
 } from '../../../../lib/snippe/client';
+import { rateLimit } from '../../../../lib/rateLimit';
 
 // TODO: Change back to 18_000 before launch
 const PREMIUM_PRICE_TZS = 1000;
@@ -58,6 +59,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Authentication required.' },
         { status: 401 }
+      );
+    }
+
+    // Rate limit: 5 payment attempts per user per minute
+    const { allowed } = rateLimit(`payment:${user.id}`, 5, 60_000);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Too many payment attempts. Please wait a moment.' },
+        { status: 429 }
       );
     }
 
