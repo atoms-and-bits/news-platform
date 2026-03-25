@@ -16,6 +16,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useUser } from '../../lib/supabase/UserContext';
+import { COUNTRY_CODES } from '../../lib/data/countryCodes';
 
 const PREMIUM_FEATURES = [
   'Unlimited article access',
@@ -41,6 +42,7 @@ export default function SubscribePage() {
 
   // Phone number (used for both mobile and card payments)
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [countryIso, setCountryIso] = useState('TZ');
 
   // Card billing fields
   const [billingAddress, setBillingAddress] = useState('');
@@ -90,18 +92,18 @@ export default function SubscribePage() {
 
         body = { payment_type: 'mobile', phone_number: phone };
       } else {
-        // Normalize phone number for card payment
-        let cardPhone = phoneNumber.replace(/[\s-]/g, '');
+        // Normalize phone number for card payment (international)
+        let cardPhone = phoneNumber.replace(/[\s\-()]/g, '');
         if (cardPhone.startsWith('0')) {
-          cardPhone = '255' + cardPhone.slice(1);
-        } else if (cardPhone.startsWith('+')) {
           cardPhone = cardPhone.slice(1);
+        } else if (cardPhone.startsWith('+')) {
+          cardPhone = cardPhone.replace(/^\+\d+/, '');
         }
+        const dialCode = COUNTRY_CODES.find((c) => c.code === countryIso)?.dial ?? '255';
+        cardPhone = dialCode + cardPhone;
 
-        if (!/^255\d{9}$/.test(cardPhone)) {
-          setError(
-            'Enter a valid Tanzanian phone number (e.g. 0781000000 or 255781000000).'
-          );
+        if (cardPhone.length < 7 || !/^\d+$/.test(cardPhone)) {
+          setError('Enter a valid phone number.');
           setIsSubmitting(false);
           return;
         }
@@ -141,6 +143,8 @@ export default function SubscribePage() {
       setPaymentReference(data.reference);
 
       if (paymentMethod === 'card' && data.payment_url) {
+        // Store reference for verification on success page
+        localStorage.setItem('snippe_payment_ref', data.reference);
         // Redirect to Snippe's hosted checkout for card entry
         window.location.href = data.payment_url;
       } else {
@@ -462,17 +466,27 @@ export default function SubscribePage() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Phone Number *
                         </label>
-                        <input
-                          type="tel"
-                          required
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          placeholder="e.g. 0781 000 000"
-                          className={inputClass}
-                        />
-                        <p className="text-xs text-gray-400 mt-1">
-                          Tanzanian number for payment verification.
-                        </p>
+                        <div className="flex gap-2">
+                          <select
+                            value={countryIso}
+                            onChange={(e) => setCountryIso(e.target.value)}
+                            className="w-36 px-2 py-2 border border-gray-300 rounded-md focus:ring-[#2f3192] focus:border-[#2f3192] outline-none transition-colors text-sm"
+                          >
+                            {COUNTRY_CODES.map((c) => (
+                              <option key={c.code} value={c.code}>
+                                {c.flag} +{c.dial}
+                              </option>
+                            ))}
+                          </select>
+                          <input
+                            type="tel"
+                            required
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            placeholder="781 000 000"
+                            className={`flex-1 ${inputClass}`}
+                          />
+                        </div>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">

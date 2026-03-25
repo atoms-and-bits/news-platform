@@ -168,6 +168,7 @@ export async function POST(request: NextRequest) {
       state: billing.state,
       postcode: billing.postcode,
       country: billing.country,
+      phoneNumber: body.phone_number,
     };
     console.log('Card payment customer payload:', JSON.stringify(customerPayload, null, 2));
 
