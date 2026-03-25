@@ -50,7 +50,11 @@ export async function POST(request: NextRequest) {
 
     // Verify timestamp is recent (within 5 minutes) to prevent replay attacks
     const now = Math.floor(Date.now() / 1000);
-    const timestampInt = parseInt(timestamp, 10);
+    let timestampInt = parseInt(timestamp, 10);
+    // Normalize: if Snippe sends milliseconds (13+ digits), convert to seconds
+    if (timestampInt > 1e12) {
+      timestampInt = Math.floor(timestampInt / 1000);
+    }
 
     if (isNaN(timestampInt) || Math.abs(now - timestampInt) > 300) {
       console.error('Snippe webhook timestamp verification failed.');
