@@ -601,36 +601,6 @@ export default function SubscribePage() {
         </p>
       </div>
 
-      {/* Success Overlay — for card payments returning via redirect */}
-      <AnimatePresence>
-        {false && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full relative z-10 text-center"
-            >
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="font-serif text-2xl font-bold text-[#000137] mb-2">
-                Welcome Aboard!
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Your Premium subscription is now active. Enjoy full access to
-                Atoms & Bits.
-              </p>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

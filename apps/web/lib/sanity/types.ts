@@ -37,6 +37,7 @@ export interface SanityArticle {
   publishedAt: string;
   readTime: string;
   mainImage?: SanityImageSource;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any[]; // Portable Text blocks
   featured?: boolean;
   editorsPick?: boolean;

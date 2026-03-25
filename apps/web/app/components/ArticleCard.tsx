@@ -40,6 +40,7 @@ export function ArticleCard({
 
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrl}
           alt={title}

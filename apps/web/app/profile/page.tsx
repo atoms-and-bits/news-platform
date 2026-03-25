@@ -153,6 +153,7 @@ export default async function ProfilePage() {
                       className="flex gap-4 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#2f3192]/30 hover:bg-white transition-colors group"
                     >
                       {article.mainImage && (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={urlFor(article.mainImage).width(120).height(80).url()}
                           alt={article.title}

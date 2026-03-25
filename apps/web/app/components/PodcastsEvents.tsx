@@ -58,7 +58,7 @@ export function PodcastsEvents({ podcasts, events }: PodcastsEventsProps) {
             </div>
             <p className="text-gray-600 mb-8 font-sans">
               Conversations with the builders, investors, and policymakers
-              shaping East Africa's digital future.
+              shaping East Africa&apos;s digital future.
             </p>
 
             <div className="space-y-6">

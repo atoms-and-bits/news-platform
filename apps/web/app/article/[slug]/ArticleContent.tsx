@@ -24,7 +24,8 @@ interface Article {
   time: string;
   readTime: string;
   imageUrl: string;
-  body: any[]; // Portable Text blocks
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body: any[]; // Portable Text blocks from Sanity
   premium: boolean;
   featured: boolean;
 }
@@ -50,15 +51,14 @@ import { useUser } from '../../../lib/supabase/UserContext';
  * Custom components for rendering Portable Text
  * Defines how different block types should be rendered
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const portableTextComponents = {
   block: {
-    // Render paragraphs
     normal: ({ children }: any) => (
       <p className="text-gray-800 leading-relaxed mb-6 font-sans text-lg">
         {children}
       </p>
     ),
-    // Render headings
     h1: ({ children }: any) => (
       <h1 className="font-serif text-3xl font-bold text-[#000137] mt-10 mb-4">
         {children}
@@ -74,14 +74,12 @@ const portableTextComponents = {
         {children}
       </h3>
     ),
-    // Render blockquotes
     blockquote: ({ children }: any) => (
       <blockquote className="border-l-4 border-[#2f3192] pl-4 italic text-gray-700 my-6">
         {children}
       </blockquote>
     ),
   },
-  // Render lists
   list: {
     bullet: ({ children }: any) => (
       <ul className="list-disc list-inside mb-6 space-y-2">{children}</ul>
@@ -90,7 +88,6 @@ const portableTextComponents = {
       <ol className="list-decimal list-inside mb-6 space-y-2">{children}</ol>
     ),
   },
-  // Render marks (bold, italic, etc.)
   marks: {
     strong: ({ children }: any) => <strong className="font-bold">{children}</strong>,
     em: ({ children }: any) => <em className="italic">{children}</em>,
@@ -114,6 +111,7 @@ const portableTextComponents = {
     },
   },
 };
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 // ─── Main Component ──────────────────────────────────────────
 export function ArticleContent({ article, relatedArticles }: ArticleContentProps) {
@@ -130,6 +128,7 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
   // Check if article is bookmarked on mount
   useEffect(() => {
     if (!user) return;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { createClient } = require('../../../lib/supabase/client') as typeof import('../../../lib/supabase/client');
     const supabase = createClient();
     supabase
@@ -248,6 +247,7 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
 
         {/* Hero Image */}
         <div className="mb-12 rounded-xl overflow-hidden shadow-lg">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={article.imageUrl}
             alt={article.title}
@@ -356,6 +356,7 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
             <Link key={related.id} href={`/article/${related.slug}`}>
               <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col">
                 <div className="h-48 overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={related.imageUrl}
                     alt={related.title}

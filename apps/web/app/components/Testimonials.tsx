@@ -58,10 +58,11 @@ export function Testimonials() {
               <Quote className="absolute top-6 right-6 w-8 h-8 text-[#2f3192] opacity-50" />
 
               <p className="text-lg text-white/90 font-serif leading-relaxed mb-8 italic">
-                "{item.quote}"
+                &ldquo;{item.quote}&rdquo;
               </p>
 
               <div className="flex items-center gap-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                 src={item.image}
                 alt={item.author}

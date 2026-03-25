@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getAllArticles } from '../../../lib/sanity/queries';
 import { formatRelativeTime } from '../../../lib/utils/dateHelpers';

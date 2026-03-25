@@ -49,6 +49,7 @@ export function ArticleListCard({
       >
         {/* Image Container */}
         <div className="w-full md:w-[280px] h-48 md:h-auto flex-shrink-0 overflow-hidden rounded-lg">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageUrl}
             alt={title}

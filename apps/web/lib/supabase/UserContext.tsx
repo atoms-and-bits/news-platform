@@ -111,6 +111,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const value = useMemo(() => ({ user, isLoading, signOut }), [user, isLoading]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

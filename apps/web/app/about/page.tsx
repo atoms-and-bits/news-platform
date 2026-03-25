@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Lightbulb, FlaskConical, Database, ArrowRight } from 'lucide-react';
+import { Database, ArrowRight } from 'lucide-react';
 
 export default function AboutPage() {
   return (

@@ -1,6 +1,13 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "PREMIUM_PRICE_TZS",
+    "APP_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SNIPPE_API_KEY",
+    "SNIPPE_WEBHOOK_SECRET"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

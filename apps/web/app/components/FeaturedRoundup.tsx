@@ -36,7 +36,7 @@ export function FeaturedRoundup({ editorPicks, roundupStories }: FeaturedRoundup
           <div className="lg:col-span-7">
             <h2 className="font-serif text-2xl font-bold text-[#000137] mb-6 flex items-center gap-3">
               <span className="w-8 h-1 bg-[#2f3192] rounded-full"></span>
-              Editor's Picks
+              Editor&apos;s Picks
             </h2>
             <div className="flex flex-col gap-10">
               {editorPicks.map((article) => (
@@ -61,7 +61,7 @@ export function FeaturedRoundup({ editorPicks, roundupStories }: FeaturedRoundup
                 Weekly Roundup
               </h2>
               <p className="text-gray-500 text-sm mb-8 font-sans">
-                Our curated digest of the week's most important stories.
+                Our curated digest of the week&apos;s most important stories.
               </p>
 
               <div className="space-y-8">

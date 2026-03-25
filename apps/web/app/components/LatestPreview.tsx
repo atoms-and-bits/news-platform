@@ -39,7 +39,7 @@ export function LatestPreview({ articles }: LatestPreviewProps) {
             </h2>
             <p className="text-gray-600 font-sans max-w-2xl">
               Stay ahead of the curve with breaking stories from across East
-              Africa's tech landscape.
+              Africa&apos;s tech landscape.
             </p>
           </div>
           <Link

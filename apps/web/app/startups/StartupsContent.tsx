@@ -128,7 +128,7 @@ export function StartupsContent({ startups }: StartupsContentProps) {
         ) : (
           <div className="text-center py-20 bg-white rounded-xl border border-gray-100">
             <p className="text-gray-500 text-lg">
-              No startups found matching "{searchTerm}"
+              No startups found matching &ldquo;{searchTerm}&rdquo;
             </p>
             <button
               onClick={() => setSearchTerm('')}

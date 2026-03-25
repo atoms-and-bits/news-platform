@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Linkedin, Instagram } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import { FooterCTA } from './FooterCTA';
 
