@@ -14,8 +14,7 @@ import {
 } from '../../../../lib/snippe/client';
 import { rateLimit } from '../../../../lib/rateLimit';
 
-// TODO: Change back to 18_000 before launch
-const PREMIUM_PRICE_TZS = 1000;
+const PREMIUM_PRICE_TZS = parseInt(process.env.PREMIUM_PRICE_TZS || '10000', 10);
 
 // ─── Input Validation Schemas ────────────────────────────────
 const phoneNumberSchema = z.string()

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Search, Menu, X, LogOut, Settings } from 'lucide-react';
 import { useUser } from '../../lib/supabase/UserContext';
@@ -54,11 +55,14 @@ export function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo Section */}
           <Link href="/" className="flex items-center gap-3 cursor-pointer group">
-            <div className="w-10 h-10 bg-[#2f3192] rounded-md flex items-center justify-center shadow-sm group-hover:bg-[#242675] transition-colors">
-              <span className="text-white font-bold font-serif text-lg">
-                A&B
-              </span>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Atoms & Bits"
+              width={60}
+              height={60}
+              className="rounded-md shadow-sm"
+              priority
+            />
             <span className="text-[#000137] font-bold text-xl tracking-tight hidden sm:block font-sans">
               Atoms & Bits
             </span>

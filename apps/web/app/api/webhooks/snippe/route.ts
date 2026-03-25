@@ -9,7 +9,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { verifyWebhookSignature } from '../../../../lib/snippe/client';
 import type { Database } from '../../../../lib/supabase/database.types';
-import { parse } from 'path';
 
 // Use service role client — webhook has no user session
 function createServiceClient() {
