@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { createClient } from '../../../../lib/supabase/server';
 import {
   createMobilePayment,
@@ -15,24 +16,35 @@ import {
 // TODO: Change back to 18_000 before launch
 const PREMIUM_PRICE_TZS = 1000;
 
-interface MobilePaymentBody {
-  payment_type: 'mobile';
-  phone_number: string;
-}
+// ─── Input Validation Schemas ────────────────────────────────
+const phoneNumberSchema = z.string()
+  .min(7, 'Phone number too short')
+  .max(15, 'Phone number too long')
+  .regex(/^\d+$/, 'Phone number must contain only digits');
 
-interface CardPaymentBody {
-  payment_type: 'card';
-  phone_number: string;
-  billing: {
-    address: string;
-    city: string;
-    state: string;
-    postcode: string;
-    country: string;
-  };
-}
+const billingSchema = z.object({
+  address: z.string().min(3, 'Address too short').max(200, 'Address too long'),
+  city: z.string().min(1, 'City is required').max(100, 'City too long'),
+  state: z.string().min(1, 'State is required').max(100, 'State too long'),
+  postcode: z.string().min(1, 'Postcode is required').max(20, 'Postcode too long'),
+  country: z.string().length(2, 'Country must be a 2-letter ISO code'),
+});
 
-type PaymentBody = MobilePaymentBody | CardPaymentBody;
+const mobilePaymentSchema = z.object({
+  payment_type: z.literal('mobile'),
+  phone_number: phoneNumberSchema,
+});
+
+const cardPaymentSchema = z.object({
+  payment_type: z.literal('card'),
+  phone_number: phoneNumberSchema,
+  billing: billingSchema,
+});
+
+const paymentBodySchema = z.discriminatedUnion('payment_type', [
+  mobilePaymentSchema,
+  cardPaymentSchema,
+]);
 
 export async function POST(request: NextRequest) {
   try {
@@ -70,15 +82,19 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 3. Parse request body
-    const body = (await request.json()) as PaymentBody;
+    // 3. Parse and validate request body
+    const rawBody = await request.json();
+    const parsed = paymentBodySchema.safeParse(rawBody);
 
-    if (!body.payment_type || !['mobile', 'card'].includes(body.payment_type)) {
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0]?.message || 'Invalid input.';
       return NextResponse.json(
-        { error: 'Invalid payment_type. Must be "mobile" or "card".' },
+        { error: firstError },
         { status: 400 }
       );
     }
+
+    const body = parsed.data;
 
     // 4. Get user profile for customer info
     const { data: profile } = await supabase
@@ -94,11 +110,7 @@ export async function POST(request: NextRequest) {
 
     // In dev, use APP_URL (e.g. ngrok) so Snippe can reach the webhook.
     // In prod, derive from the request origin.
-    const baseUrl =
-      process.env.APP_URL ||
-      (request.headers.get('x-forwarded-host')
-        ? `https://${request.headers.get('x-forwarded-host')}`
-        : request.nextUrl.origin);
+    const baseUrl = process.env.APP_URL || request.nextUrl.origin; // either from env or request origin
     const webhookUrl = `${baseUrl}/api/webhooks/snippe`;
 
     // Idempotency key to prevent duplicate payments
@@ -113,12 +125,6 @@ export async function POST(request: NextRequest) {
 
     // 5. Create payment with Snippe
     if (body.payment_type === 'mobile') {
-      if (!body.phone_number) {
-        return NextResponse.json(
-          { error: 'phone_number is required for mobile payments.' },
-          { status: 400 }
-        );
-      }
 
       const result = await createMobilePayment({
         amount: PREMIUM_PRICE_TZS,
@@ -140,21 +146,6 @@ export async function POST(request: NextRequest) {
 
     // Card payment
     const billing = body.billing;
-    if (
-      !billing?.address ||
-      !billing?.city ||
-      !billing?.state ||
-      !billing?.postcode ||
-      !billing?.country
-    ) {
-      return NextResponse.json(
-        {
-          error:
-            'All billing fields (address, city, state, postcode, country) are required for card payments.',
-        },
-        { status: 400 }
-      );
-    }
 
     const redirectUrl = `${baseUrl}/premium/success`;
     const cancelUrl = `${baseUrl}/subscribe?cancelled=true`;
@@ -170,7 +161,6 @@ export async function POST(request: NextRequest) {
       country: billing.country,
       phoneNumber: body.phone_number,
     };
-    console.log('Card payment customer payload:', JSON.stringify(customerPayload, null, 2));
 
     const result = await createCardPayment({
       amount: PREMIUM_PRICE_TZS,
@@ -192,9 +182,10 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     if (error instanceof SnippeError) {
+      console.error('Snippe API error:', error.message, error.errorCode);
       return NextResponse.json(
-        { error: error.message },
-        { status: error.statusCode }
+        { error: 'Payment service error. Please try again.' },
+        { status: 502 }
       );
     }
 

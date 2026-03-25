@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { verifyWebhookSignature } from '../../../../lib/snippe/client';
 import type { Database } from '../../../../lib/supabase/database.types';
+import { parse } from 'path';
 
 // Use service role client — webhook has no user session
 function createServiceClient() {
@@ -47,8 +48,20 @@ export async function POST(request: NextRequest) {
     const signature = request.headers.get('X-Webhook-Signature') || '';
     const event = request.headers.get('X-Webhook-Event') || '';
 
+    // Verify timestamp is recent (within 5 minutes) to prevent replay attacks
+    const now = Math.floor(Date.now() / 1000);
+    const timestampInt = parseInt(timestamp, 10);
+
+    if (isNaN(timestampInt) || Math.abs(now - timestampInt) > 300) {
+      console.error('Snippe webhook timestamp verification failed.');
+      return NextResponse.json(
+        { error: 'Invalid timestamp.' },
+        { status: 401 }
+      );
+    }
+
     // 2. Verify signature
-    if (!timestamp || !signature) {
+    if (!signature) {
       return NextResponse.json(
         { error: 'Missing webhook headers.' },
         { status: 400 }
