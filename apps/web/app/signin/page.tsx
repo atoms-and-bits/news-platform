@@ -4,6 +4,7 @@ import React, { Suspense, useMemo, useState } from 'react';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { createClient } from '../../lib/supabase/client';
 
@@ -39,6 +40,7 @@ function SignInContent() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const clearFeedback = () => {
     setErrorMessage(null);
@@ -150,9 +152,7 @@ function SignInContent() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href="/" className="flex justify-center mb-6">
-          <div className="w-12 h-12 bg-[#2f3192] rounded-lg flex items-center justify-center shadow-sm">
-            <span className="text-white font-bold font-serif text-xl">A&B</span>
-          </div>
+          <Image src="/logo.png" alt="Atoms & Bits" width={48} height={48} className="rounded-lg shadow-sm" />
         </Link>
         <h2 className="mt-6 text-center text-3xl font-serif font-bold text-[#000137]">
           {mode === 'signin' && 'Welcome back'}
@@ -318,10 +318,34 @@ function SignInContent() {
                 </div>
               )}
 
+              {/* Add a check button for accepting terms of service and privacy policy during signup */}
+              {mode === 'signup' && (
+                <div className="flex items-center">
+                  <input
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    id="terms"
+                    type="checkbox"
+                    required
+                    className="h-4 w-4 text-[#2f3192] focus:ring-[#2f3192] border-gray-300 rounded"
+                  />
+                  <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+                    I agree to the{' '}
+                    <Link href="/terms" className="text-[#2f3192] hover:text-[#242675]">
+                      Terms of Service
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="/privacy" className="text-[#2f3192] hover:text-[#242675]">
+                      Privacy Policy
+                    </Link>
+                    .
+                  </label>
+                </div>
+              )}
+
               <div>
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || (mode === 'signup' && !acceptTerms)}
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#000137] hover:bg-[#2f3192] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2f3192] transition-colors disabled:opacity-70"
                 >
                   {loading ? 'Please wait...' : mode === 'signin' ? 'Sign in' : 'Create Account'}

@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createClient } from '../../../lib/supabase/client';
 
 export default function ResetPasswordPage() {
@@ -59,9 +60,7 @@ export default function ResetPasswordPage() {
     <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href="/" className="flex justify-center mb-6">
-          <div className="w-12 h-12 bg-[#2f3192] rounded-lg flex items-center justify-center shadow-sm">
-            <span className="text-white font-bold font-serif text-xl">A&B</span>
-          </div>
+          <Image src="/logo.png" alt="Atoms & Bits" width={48} height={48} className="rounded-lg shadow-sm" />
         </Link>
         <h2 className="mt-6 text-center text-3xl font-serif font-bold text-[#000137]">
           Set new password
