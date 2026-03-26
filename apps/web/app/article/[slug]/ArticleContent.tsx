@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, Calendar, User as UserIcon, Lock, Bookmark, BookmarkCheck } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, User as UserIcon, Lock, Bookmark, BookmarkCheck, Share2, Check } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 
 // ─── Type Definitions ────────────────────────────────────────
@@ -119,6 +119,18 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkLoading, setBookmarkLoading] = useState(false);
+  const [shareSuccess, setShareSuccess] = useState(false);
+
+  async function handleShare() {
+    const url = window.location.href;
+    if (navigator.share) {
+      await navigator.share({ title: article.title, url });
+    } else {
+      await navigator.clipboard.writeText(url);
+      setShareSuccess(true);
+      setTimeout(() => setShareSuccess(false), 2000);
+    }
+  }
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -339,8 +351,12 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
                 East Africa
               </span>
             </div>
-            <button className="text-sm font-bold text-[#000137] border border-[#000137] px-4 py-2 rounded hover:bg-[#000137] hover:text-white transition-colors">
-              SHARE ARTICLE
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 text-sm font-bold text-[#000137] border border-[#000137] px-4 py-2 rounded hover:bg-[#000137] hover:text-white transition-colors"
+            >
+              {shareSuccess ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
+              {shareSuccess ? 'LINK COPIED' : 'SHARE ARTICLE'}
             </button>
           </div>
         )}

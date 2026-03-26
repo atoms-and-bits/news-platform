@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Search, Menu, X, LogOut, Settings } from 'lucide-react';
+import { Menu, X, LogOut, Settings } from 'lucide-react';
 import { useUser } from '../../lib/supabase/UserContext';
 
 /**
@@ -101,13 +101,6 @@ export function Header() {
                 </Link>
               }
             </div>
-
-            <button
-              className="p-2 text-[#000137] hover:bg-gray-100 rounded-full transition-colors"
-              aria-label="Search">
-
-              <Search className="w-5 h-5" />
-            </button>
 
             <div className="hidden lg:flex items-center gap-3">
               {user ?
