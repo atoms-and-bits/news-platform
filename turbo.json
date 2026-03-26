@@ -6,7 +6,8 @@
     "APP_URL",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SNIPPE_API_KEY",
-    "SNIPPE_WEBHOOK_SECRET"
+    "SNIPPE_WEBHOOK_SECRET",
+    "NODE_ENV"
   ],
   "tasks": {
     "build": {
