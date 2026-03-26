@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
       .from('users')
       .select('full_name, email')
       .eq('id', user.id)
-      .single();
+      .maybeSingle();
 
     const nameParts = (profile?.full_name || 'Member').split(' ');
     const firstname = nameParts[0] || 'Member';
