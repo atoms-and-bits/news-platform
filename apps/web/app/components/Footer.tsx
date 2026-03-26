@@ -12,11 +12,13 @@ export function Footer() {
           {/* Brand Column */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3 cursor-pointer group">
-              <div className="w-8 h-8 bg-[#2f3192] rounded-md flex items-center justify-center shadow-sm group-hover:bg-white transition-colors">
-                <span className="text-white group-hover:text-[#2f3192] font-bold font-serif text-sm transition-colors">
-                  A&B
-                </span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Atoms & Bits"
+                width={36}
+                height={36}
+                className="rounded-md shadow-sm"
+              />
               <span className="text-white font-bold text-lg tracking-tight font-sans">
                 Atoms & Bits
               </span>

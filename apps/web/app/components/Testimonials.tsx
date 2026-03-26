@@ -1,33 +1,32 @@
 import React from 'react';
-import { Quote } from 'lucide-react';
-const testimonials = [
-{
-  id: 1,
-  quote:
-  'Atoms & Bits has become my daily briefing. The depth of coverage on the Tanzanian tech ecosystem is unmatched.',
-  author: 'Jumanne Mtambalike',
-  role: 'CEO, Sahara Ventures',
-  image:
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&q=80&fit=crop'
-},
-{
-  id: 2,
-  quote:
-  'Finally, a platform that treats African tech news with the seriousness it deserves. Essential reading for investors.',
-  author: 'Miranda Naiman',
-  role: 'Founder, Empower',
-  image:
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&q=80&fit=crop'
-},
-{
-  id: 3,
-  quote:
-  'The deep dives into policy and infrastructure have helped us navigate the regulatory landscape with confidence.',
-  author: 'Benjamin Fernandez',
-  role: 'Founder, NALA',
-  image:
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&q=80&fit=crop'
-}];
+import { Newspaper, Users, TrendingUp } from 'lucide-react';
+
+const highlights = [
+  {
+    id: 1,
+    stat: '250K+',
+    label: 'Impressions',
+    description:
+      'Nearly 250,000 impressions across LinkedIn, X, and Substack since launching in 2022.',
+    icon: Users,
+  },
+  {
+    id: 2,
+    stat: '50+',
+    label: 'Weekly editions',
+    description:
+      'Consistent weekly coverage of Tanzania and East Africa\u2019s tech ecosystem \u2014 startups, policy, fintech, AI, and more.',
+    icon: Newspaper,
+  },
+  {
+    id: 3,
+    stat: '2,600+',
+    label: 'Subscribers',
+    description:
+      'A growing community of investors, entrepreneurs, and tech enthusiasts who trust A&B for their weekly briefing.',
+    icon: TrendingUp,
+  },
+];
 
 export function Testimonials() {
   return (
@@ -41,46 +40,37 @@ export function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-            Trusted by Industry Leaders
+            Why Atoms & Bits
           </h2>
           <p className="text-white/70 max-w-2xl mx-auto font-sans">
-            Join thousands of founders, investors, and policymakers who rely on
-            Atoms & Bits.
+            Tanzania&apos;s #1 tech newsletter, now a full platform. Built for
+            the builders, investors, and policymakers shaping East Africa&apos;s
+            digital future.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((item) =>
-          <div
-            key={item.id}
-            className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl relative group hover:bg-white/10 transition-colors">
-
-              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#2f3192] opacity-50" />
-
-              <p className="text-lg text-white/90 font-serif leading-relaxed mb-8 italic">
-                &ldquo;{item.quote}&rdquo;
-              </p>
-
-              <div className="flex items-center gap-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                src={item.image}
-                alt={item.author}
-                className="w-12 h-12 rounded-full object-cover border-2 border-[#2f3192]" />
-
-                <div>
-                  <h4 className="font-bold text-white text-sm">
-                    {item.author}
-                  </h4>
-                  <span className="text-xs text-white/60 uppercase tracking-wider">
-                    {item.role}
-                  </span>
-                </div>
+          {highlights.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl relative group hover:bg-white/10 transition-colors text-center"
+            >
+              <div className="w-14 h-14 bg-[#2f3192]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <item.icon className="w-7 h-7 text-[#a5a6ff]" />
               </div>
+              <div className="text-4xl font-bold text-white mb-1 font-serif">
+                {item.stat}
+              </div>
+              <div className="text-sm font-bold text-[#a5a6ff] uppercase tracking-wider mb-4">
+                {item.label}
+              </div>
+              <p className="text-white/70 font-sans text-sm leading-relaxed">
+                {item.description}
+              </p>
             </div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
