@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, LogOut, Settings } from 'lucide-react';
+import { Menu, X, LogOut, Settings, Search } from 'lucide-react';
+import { SearchOverlay } from './SearchOverlay';
 import { useUser } from '../../lib/supabase/UserContext';
 
 /**
@@ -16,6 +17,7 @@ export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navLinks = [
   {
     name: 'Latest',
@@ -86,6 +88,15 @@ export function Header() {
 
           {/* Actions Section */}
           <div className="flex items-center gap-4">
+            {/* Search Button */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 text-[#000137] hover:text-[#2f3192] transition-colors"
+              aria-label="Search articles"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+
             {/* Mobile Header CTA - Visible on mobile only */}
             <div className="md:hidden flex items-center mr-2">
               {user && isPremium &&
@@ -275,6 +286,7 @@ export function Header() {
           </div>
         </div>
       }
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>);
 
 }

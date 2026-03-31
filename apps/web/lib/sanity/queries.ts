@@ -4,6 +4,7 @@ import type {
   SanityPodcast,
   SanityEvent,
   SanityStartup,
+  SearchableArticle,
 } from "./types";
 
 // ─── Articles ────────────────────────────────────────────
@@ -60,6 +61,16 @@ export async function getArticlesByIds(ids: string[]): Promise<SanityArticle[]> 
       author, publishedAt, mainImage
     }`,
     { ids }
+  );
+}
+
+/** Fetch a compact search index for client-side article search */
+export async function getSearchableArticles(): Promise<SearchableArticle[]> {
+  return client.fetch(
+    `*[_type == "article"] | order(publishedAt desc) {
+      _id, title, slug, category, excerpt,
+      publishedAt, mainImage, premium
+    }`
   );
 }
 

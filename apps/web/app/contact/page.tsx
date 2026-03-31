@@ -68,7 +68,7 @@ export default function ContactPage() {
                 </span>
               </a>
               <a
-                href="https://maps.google.com/?q=Masaki,+Dar+es+Salaam,+Tanzania"
+                href="https://www.google.com/maps?q=Mbezi%20beach,+Dar+es+Salaam,+Tanzania"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-[#000137] hover:text-[#2f3192] transition-colors group"
