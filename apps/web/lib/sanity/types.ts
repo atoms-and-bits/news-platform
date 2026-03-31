@@ -45,6 +45,18 @@ export interface SanityArticle {
   premium?: boolean;
 }
 
+export interface SearchableArticle {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  category: string;
+  excerpt: string;
+  publishedAt: string;
+  mainImage?: SanityImageSource;
+  imageUrl?: string;
+  premium?: boolean;
+}
+
 // ─── Podcast ─────────────────────────────────────────────
 export interface SanityPodcast {
   _id: string;
