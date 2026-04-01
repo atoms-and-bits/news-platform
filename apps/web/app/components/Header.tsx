@@ -19,6 +19,11 @@ export function Header() {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navLinks = [
+    {
+    name: 'All Stories',
+    id: 'stories',
+    href: '/stories'
+  },
   {
     name: 'Latest',
     id: 'latest',
