@@ -5,9 +5,11 @@
  */
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ArticleListCard } from '../components/ArticleListCard';
+import { LoadMoreButton } from '../components/LoadMoreButton';
+import { usePagination } from '../../lib/hooks/usePagination';
 
 // ─── Type Definitions ────────────────────────────────────────
 interface Article {
@@ -33,10 +35,21 @@ export function StoriesContent({ articles }: StoriesContentProps) {
   const categories = ['All', ...Array.from(new Set(articles.map((a) => a.category)))];
 
   // Filter articles by category
-  const displayedArticles =
-    activeCategory === 'All'
-      ? articles
-      : articles.filter((article) => article.category === activeCategory);
+  const filteredArticles = useMemo(
+    () =>
+      activeCategory === 'All'
+        ? articles
+        : articles.filter((article) => article.category === activeCategory),
+    [articles, activeCategory]
+  );
+
+  const { displayedItems: displayedArticles, hasMore, loadMore, reset } =
+    usePagination(filteredArticles);
+
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    reset();
+  };
 
   return (
     <>
@@ -59,7 +72,7 @@ export function StoriesContent({ articles }: StoriesContentProps) {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all ${
                 activeCategory === cat
                   ? 'bg-[#000137] text-white shadow-md'
@@ -92,6 +105,9 @@ export function StoriesContent({ articles }: StoriesContentProps) {
             </motion.div>
           ))}
         </div>
+
+        {/* Load More */}
+        {hasMore && <LoadMoreButton onLoadMore={loadMore} label="Load More Stories" />}
 
         {/* Empty State */}
         {displayedArticles.length === 0 && (

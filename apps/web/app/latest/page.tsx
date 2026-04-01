@@ -5,8 +5,7 @@
  */
 
 import React from 'react';
-import Link from 'next/link';
-import { ArticleListCard } from '../components/ArticleListCard';
+import { PaginatedArticleList } from '../components/PaginatedArticleList';
 import { TopHeadlines } from '../components/TopHeadlines';
 import { SidebarCTA } from '../components/SidebarCTA';
 import { getAllArticles } from '../../lib/sanity/queries';
@@ -48,28 +47,12 @@ export default async function LatestPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Feed Column */}
-          <div className="lg:col-span-8 space-y-6">
-            {articles.map((article) => (
-              <ArticleListCard
-                key={article.id}
-                slug={article.slug}
-                category={article.category}
-                title={article.title}
-                excerpt={article.excerpt}
-                author={article.author}
-                time={article.time}
-                imageUrl={article.imageUrl}
-              />
-            ))}
-
-            {/* Load More Button */}
-            <div className="pt-8 flex justify-center">
-              <Link
-                href="/stories"
-                className="px-8 py-3 bg-white border border-gray-300 text-[#000137] font-bold rounded-md hover:bg-gray-50 hover:border-[#000137] transition-all shadow-sm">
-                VIEW ALL STORIES
-              </Link>
-            </div>
+          <div className="lg:col-span-8">
+            <PaginatedArticleList
+              articles={articles}
+              pageSize={5}
+              viewAllHref="/stories"
+            />
           </div>
 
           {/* Sidebar Column */}

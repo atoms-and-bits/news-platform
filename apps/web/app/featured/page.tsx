@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { ArticleListCard } from '../components/ArticleListCard';
+import { PaginatedArticleList } from '../components/PaginatedArticleList';
 import { TopHeadlines } from '../components/TopHeadlines';
 import { SidebarCTA } from '../components/SidebarCTA';
 import { getFeaturedArticles } from '../../lib/sanity/queries';
@@ -43,25 +43,12 @@ export default async function FeaturedPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Feed Column */}
-          <div className="lg:col-span-8 space-y-6">
-            {articles.length === 0 ? (
-              <div className="text-center py-16">
-                <p className="text-gray-500 text-lg">No featured stories yet. Check back soon.</p>
-              </div>
-            ) : (
-              articles.map((article) => (
-                <ArticleListCard
-                  key={article.id}
-                  slug={article.slug}
-                  category={article.category}
-                  title={article.title}
-                  excerpt={article.excerpt}
-                  author={article.author}
-                  time={article.time}
-                  imageUrl={article.imageUrl}
-                />
-              ))
-            )}
+          <div className="lg:col-span-8">
+            <PaginatedArticleList
+              articles={articles}
+              emptyMessage="No featured stories yet. Check back soon."
+              viewAllHref="/stories"
+            />
           </div>
 
           {/* Sidebar Column */}

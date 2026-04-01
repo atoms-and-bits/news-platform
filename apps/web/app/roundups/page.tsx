@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { ArticleListCard } from '../components/ArticleListCard';
+import { PaginatedArticleList } from '../components/PaginatedArticleList';
 import { getRoundupArticles } from '../../lib/sanity/queries';
 import { formatRelativeTime } from '../../lib/utils/dateHelpers';
 import { urlFor } from '../../lib/sanity/image';
@@ -47,28 +47,10 @@ export default async function RoundupsPage() {
 
       {/* Roundup Articles List */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-6">
-          {roundupArticles.length > 0 ? (
-            roundupArticles.map((article) => (
-              <ArticleListCard
-                key={article.id}
-                slug={article.slug}
-                category={article.category}
-                title={article.title}
-                excerpt={article.excerpt}
-                author={article.author}
-                time={article.time}
-                imageUrl={article.imageUrl}
-              />
-            ))
-          ) : (
-            <div className="text-center py-20 bg-white rounded-xl border border-gray-100">
-              <p className="text-gray-500 text-lg">
-                No weekly roundups available yet. Check back soon!
-              </p>
-            </div>
-          )}
-        </div>
+        <PaginatedArticleList
+          articles={roundupArticles}
+          emptyMessage="No weekly roundups available yet. Check back soon!"
+        />
       </div>
     </div>
   );
