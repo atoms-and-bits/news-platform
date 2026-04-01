@@ -82,5 +82,33 @@ export default defineType({
         },
       ],
     }),
+    defineArrayMember({
+      name: 'youtube',
+      type: 'object',
+      title: 'YouTube Video',
+      fields: [
+        {
+          name: 'url',
+          type: 'url',
+          title: 'YouTube URL',
+          description: 'Paste the full YouTube video URL (e.g. https://www.youtube.com/watch?v=...)',
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+        },
+      ],
+      preview: {
+        select: {title: 'url', subtitle: 'caption'},
+        prepare({title, subtitle}) {
+          return {
+            title: title || 'YouTube Video',
+            subtitle: subtitle || 'No caption',
+          }
+        },
+      },
+    }),
   ],
 })

@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Calendar, User as UserIcon, Lock, Bookmark, BookmarkCheck, Share2, Check } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
+import { urlFor } from '../../../lib/sanity/image';
 
 // ─── Type Definitions ────────────────────────────────────────
 interface Article {
@@ -107,6 +108,61 @@ const portableTextComponents = {
         >
           {children}
         </a>
+      );
+    },
+  },
+  types: {
+    image: ({ value }: any) => {
+      if (!value?.asset) return null;
+      return (
+        <figure className="my-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={urlFor(value).width(1200).url()}
+            alt={value.alt || ''}
+            className="w-full rounded-lg shadow-sm"
+          />
+          {value.caption && (
+            <figcaption className="text-center text-sm text-gray-500 mt-2 italic">
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
+    youtube: ({ value }: any) => {
+      if (!value?.url) return null;
+      // Extract video ID from various YouTube URL formats
+      const url = value.url;
+      let videoId: string | null = null;
+      try {
+        const parsed = new URL(url);
+        if (parsed.hostname.includes('youtu.be')) {
+          videoId = parsed.pathname.slice(1);
+        } else {
+          videoId = parsed.searchParams.get('v');
+        }
+      } catch {
+        return null;
+      }
+      if (!videoId) return null;
+      return (
+        <figure className="my-8">
+          <div className="relative w-full rounded-lg overflow-hidden shadow-sm" style={{ paddingBottom: '56.25%' }}>
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}`}
+              title={value.caption || 'YouTube video'}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
+          </div>
+          {value.caption && (
+            <figcaption className="text-center text-sm text-gray-500 mt-2 italic">
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
       );
     },
   },
