@@ -209,7 +209,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }
 
     applySearch(query, searchIndex);
-  }, [applySearch, query, searchIndex]);
+  }, [applySearch, fetchFailed, query, searchIndex]);
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value);
