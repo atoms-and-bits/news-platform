@@ -23,9 +23,9 @@ export default async function FeaturedPage() {
     excerpt: article.excerpt,
     author: article.author,
     time: formatRelativeTime(article.publishedAt),
-    imageUrl: article.mainImage
+    imageUrl: article.mainImage?.asset
       ? urlFor(article.mainImage).width(800).height(600).url()
-      : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80',
+      : undefined,
   }));
 
   return (

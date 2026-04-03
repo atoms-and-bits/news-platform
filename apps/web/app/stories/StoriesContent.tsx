@@ -20,7 +20,7 @@ interface Article {
   excerpt: string;
   author: string;
   time: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 interface StoriesContentProps {

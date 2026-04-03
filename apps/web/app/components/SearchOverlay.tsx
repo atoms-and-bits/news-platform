@@ -74,6 +74,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const [results, setResults] = useState<SearchableArticle[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [fetchFailed, setFetchFailed] = useState(false);
   const [searchIndex, setSearchIndex] = useState<SearchableArticle[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -93,6 +94,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     setQuery('');
     setResults([]);
     setHasSearched(false);
+    setFetchFailed(false);
   }, [isOpen]);
 
   // Close on Escape key
@@ -178,7 +180,8 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
       } catch (error) {
         console.error('Search index fetch failed', error);
 
-        if (!storedCache && !memoryCache && !isCancelled) {
+        if (!isCancelled) {
+          setFetchFailed(true);
           setLoading(false);
         }
       }
@@ -201,12 +204,12 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }
 
     if (searchIndex.length === 0) {
-      setLoading(true);
+      if (!fetchFailed) setLoading(true);
       return;
     }
 
     applySearch(query, searchIndex);
-  }, [applySearch, query, searchIndex]);
+  }, [applySearch, fetchFailed, query, searchIndex]);
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value);
@@ -309,10 +312,19 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           )}
 
           {/* Initial state hint */}
-          {!hasSearched && !loading && (
+          {!hasSearched && !loading && !fetchFailed && (
             <div className="py-12 text-center">
               <p className="text-sm text-gray-400 font-sans">
                 Start typing to search articles
+              </p>
+            </div>
+          )}
+
+          {/* Fetch error state */}
+          {fetchFailed && (
+            <div className="py-12 text-center">
+              <p className="text-sm text-gray-500 font-sans">
+                Search is unavailable right now. Please try again later.
               </p>
             </div>
           )}

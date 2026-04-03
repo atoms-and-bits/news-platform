@@ -20,7 +20,7 @@ interface Article {
   title: string;
   author: string;
   time: string;
-  imageUrl: string;
+  imageUrl?: string;
   premium?: boolean;
 }
 

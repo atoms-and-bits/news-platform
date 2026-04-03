@@ -26,9 +26,9 @@ export default async function LatestPage() {
     excerpt: article.excerpt,
     author: article.author,
     time: formatRelativeTime(article.publishedAt), // Convert ISO to "8 hours ago"
-    imageUrl: article.mainImage
-      ? urlFor(article.mainImage).width(800).height(600).url() // Use Sanity image if available
-      : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80', // Fallback placeholder
+    imageUrl: article.mainImage?.asset
+      ? urlFor(article.mainImage).width(800).height(600).url()
+      : undefined,
   }));
 
   return (

@@ -8,7 +8,7 @@ export async function GET() {
     const results = await getSearchableArticles();
     const hydratedResults = results.map((article) => ({
       ...article,
-      imageUrl: article.mainImage
+      imageUrl: article.mainImage?.asset
         ? urlFor(article.mainImage).width(112).height(112).url()
         : undefined,
     }));
