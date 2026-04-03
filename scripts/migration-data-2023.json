@@ -1,0 +1,468 @@
+{
+  "caseStudies": [
+    {
+      "title": "5G in Dar es Salaam: A Comprehensive Guide to Vodacom's Plans",
+      "excerpt": "An in-depth look at Vodacom Tanzania's rollout strategy for 5G connectivity in Dar es Salaam, covering coverage maps, expected speeds, and what the upgrade means for consumers and businesses.",
+      "url": "https://www.linkedin.com/pulse/5g-dar-es-salaam-comprehensive-guide-vodacoms-plans-router-mathias/",
+      "category": "Infrastructure",
+      "publishedAt": "2023-01-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Rifaly: A Bold Step Towards Building Africa's Go-to Source for Digital Content",
+      "excerpt": "Rifaly is positioning itself as Africa's premier digital magazine and newspaper platform, bringing a wide catalogue of local publications online and making them accessible across the continent.",
+      "url": "https://www.linkedin.com/pulse/rifaly-bold-step-building-africas-go-to-source-digital-isai-mathias?utm_source=share&utm_medium=member_android&utm_campaign=share_via",
+      "category": "Innovation",
+      "publishedAt": "2023-01-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "23 Quotes From 2023: Sahara Ventures CEO's First Book on African Tech",
+      "excerpt": "A curation of 23 standout quotes drawn from the first book by the CEO of Sahara Ventures, offering insights on African entrepreneurship, technology investment, and building startups on the continent.",
+      "url": "https://www.linkedin.com/pulse/23-quotes-2023-from-sahara-ventures-ceo-first-book-african-mathias/",
+      "category": "Venture Capital",
+      "publishedAt": "2023-01-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "20 Ideas for Simple Tech Solutions in Tanzania",
+      "excerpt": "A thought-provoking list of 20 practical technology ideas that could address everyday challenges in Tanzania, spanning agriculture, healthcare, education, and financial services.",
+      "url": "https://www.linkedin.com/pulse/20-ideas-simple-tech-solutions-tanzania-according-benjamin-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-01-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Introducing Silabu: Tanzania's New Learning App",
+      "excerpt": "Silabu is a new Tanzanian e-learning application designed to make quality education more accessible to students across the country, offering curriculum-aligned content through a mobile-first experience.",
+      "url": "https://www.linkedin.com/pulse/introducing-silabu-learning-app-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-04-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "A Local Tech Pioneer Proposes an Innovative School Ranking System",
+      "excerpt": "A Tanzanian technologist has put forward a data-driven school ranking framework that could help parents, students, and policymakers make more informed decisions about educational institutions.",
+      "url": "https://www.linkedin.com/pulse/local-tech-pioneer-proposes-innovative-school-ranking-isai-mathias/",
+      "category": "Policy & Tech",
+      "publishedAt": "2023-04-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Silabu Launches AI Tutor to Democratize One-on-One Tutoring",
+      "excerpt": "Silabu has introduced an AI-powered tutoring feature that aims to give every student access to personalised, one-on-one academic support regardless of location or household income.",
+      "url": "https://www.linkedin.com/pulse/silabu-launches-ai-tutor-democratize-one-on-one-tutoring-isai-mathias/",
+      "category": "AI",
+      "publishedAt": "2023-05-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Your STEM Hub: How Robotech Is Powering Tanzania's Future",
+      "excerpt": "Robotech is building Tanzania's go-to destination for science, technology, engineering, and mathematics education, equipping young Tanzanians with hands-on skills through robotics and coding programmes.",
+      "url": "https://www.linkedin.com/pulse/your-stem-hub-how-robotech-powering-tanzanias-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-05-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Kilimanjaro Planetarium: Building Tanzania's Road to Space",
+      "excerpt": "The Kilimanjaro Planetarium project is laying the groundwork for Tanzania's engagement with space science, offering public astronomy education and serving as a catalyst for STEM interest in the region.",
+      "url": "https://www.linkedin.com/pulse/kilimanjaro-planetarium-building-tanzanias-road-space-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-05-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Introducing TanzMED: A Vertically Integrated Healthcare Platform",
+      "excerpt": "TanzMED is a comprehensive healthcare platform that integrates services from diagnosis to delivery, aiming to streamline patient care and close critical gaps in Tanzania's medical supply chain.",
+      "url": "https://www.linkedin.com/pulse/introducing-tanzmed-vertically-integrated-healthcare-platform-isai-1f/",
+      "category": "Innovation",
+      "publishedAt": "2023-05-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Is Tanzania the Next Medical Tourism Hub?",
+      "excerpt": "Medeviva and a growing cluster of Tanzanian health-tech startups are positioning the country as a destination for affordable, high-quality medical care, drawing patients from across East Africa.",
+      "url": "https://www.linkedin.com/pulse/tanzania-next-medical-tourism-hub-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-06-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "TBL's Investment in Rimomalt Technology Sets a New Standard",
+      "excerpt": "Tanzania Breweries Limited's adoption of Rimomalt technology at its plant signals a new benchmark for industrial automation and process efficiency in Tanzania's manufacturing sector.",
+      "url": "https://www.linkedin.com/pulse/tbls-investment-rimomalt-technology-sets-new-standard-isai-mathias/",
+      "category": "Infrastructure",
+      "publishedAt": "2023-06-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "From Paper to Pixels: Sales POS Redefines Bookkeeping in Tanzania",
+      "excerpt": "Sales POS is transforming how small and medium Tanzanian businesses manage their finances, replacing manual ledgers with a digital point-of-sale and bookkeeping system built for local merchants.",
+      "url": "https://www.linkedin.com/pulse/from-paper-pixels-sales-pos-redefines-bookkeeping-tanzania-mathias/",
+      "category": "Fintech",
+      "publishedAt": "2023-06-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Tanzanian Innovation Hubs Invited to Partner with UNCDF's PesaTech",
+      "excerpt": "UNCDF's PesaTech initiative has extended invitations to Tanzanian innovation hubs and fintech accelerators, opening new pathways for local startups to access global funding and technical support.",
+      "url": "https://www.linkedin.com/pulse/tanzanian-innovation-hubs-invited-partner-uncdfs-pesatech-mathias/",
+      "category": "Fintech",
+      "publishedAt": "2023-07-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Tanzania Welcomes Cross-Varsity Innovation Programme",
+      "excerpt": "A new cross-university innovation programme has been launched in Tanzania, connecting students and researchers across institutions to collaborate on technology-driven solutions for local challenges.",
+      "url": "https://www.linkedin.com/pulse/tz-welcomes-cross-varsity-innovation-programme-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-07-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Technology Visions of Tanzania's Potential Unicorns",
+      "excerpt": "An exploration of the bold technology visions held by the Tanzanian startups that could realistically reach unicorn valuations, examining their markets, models, and paths to scale.",
+      "url": "https://www.linkedin.com/pulse/technology-visions-tanzanian-unicorns-isai-mathias/",
+      "category": "Venture Capital",
+      "publishedAt": "2023-07-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Digital Agencies in Tanzania Need to Step Up",
+      "excerpt": "A candid assessment of Tanzania's digital agency landscape, arguing that local agencies must raise their creative and technical standards to remain competitive and better serve growing client demand.",
+      "url": "https://www.linkedin.com/pulse/digital-agencies-tanzania-need-step-up-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-07-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "How WhatsApp Drives B2C Growth in Mobile-First Markets",
+      "excerpt": "An analysis of how Beem and other Tanzanian companies are leveraging WhatsApp as a primary B2C channel, highlighting conversational commerce strategies that work in mobile-first, low-bandwidth markets.",
+      "url": "https://www.linkedin.com/pulse/how-whatsapp-drives-b2c-growth-mobile-first-markets-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-08-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Training Angel Investors Is Inevitable",
+      "excerpt": "As Tanzania's startup ecosystem matures, the World Business Angels Investment Forum's presence signals that building a pipeline of trained, locally-rooted angel investors is no longer optional but essential.",
+      "url": "https://www.linkedin.com/pulse/training-angel-investors-inevitable-isai-mathias/",
+      "category": "Venture Capital",
+      "publishedAt": "2023-08-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Ways to Foster High-Tech Entrepreneurship in Tanzania",
+      "excerpt": "A practical guide to the policies, programmes, and cultural shifts needed to create a thriving high-tech entrepreneurship ecosystem in Tanzania, drawing on examples from comparable emerging markets.",
+      "url": "https://www.linkedin.com/pulse/ways-foster-high-tech-entrepreneurship-isai-mathias/",
+      "category": "Innovation",
+      "publishedAt": "2023-08-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "TaxTech: The Future of Financial Innovation in Tanzania",
+      "excerpt": "Tanzania's Virtual Fiscal Device mandate is accelerating the adoption of tax technology among SMEs, and Simplify VFD is one of the startups riding this wave to modernise how businesses report revenue.",
+      "url": "https://www.linkedin.com/pulse/taxtech-future-financial-innovation-tanzania-isai-mathias/",
+      "category": "Fintech",
+      "publishedAt": "2023-08-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "You Can Self-Fund Your Startup",
+      "excerpt": "A case for bootstrapping in the Tanzanian context, outlining how local founders can build sustainable businesses through revenue-first strategies rather than relying on external investment from day one.",
+      "url": "https://www.linkedin.com/pulse/you-can-self-fund-your-startup-isai-mathias/",
+      "category": "Venture Capital",
+      "publishedAt": "2023-09-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Ways Tanzanian Startups Can Raise Billions",
+      "excerpt": "A strategic breakdown of the funding mechanisms from impact capital to debt financing that Tanzanian startups can tap to scale to billion-shilling valuations and beyond.",
+      "url": "https://www.linkedin.com/pulse/ways-tanzanian-startups-can-raise-billions-isai-mathias/",
+      "category": "Venture Capital",
+      "publishedAt": "2023-09-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "You Can Save Now, Buy Later in Tanzania",
+      "excerpt": "Tunzaa is pioneering a save-now-buy-later model tailored for Tanzanian consumers, offering a disciplined alternative to traditional credit that helps customers achieve savings goals before making purchases.",
+      "url": "https://www.linkedin.com/pulse/you-can-save-now-buy-later-tanzania-isai-mathias-zrgkf/",
+      "category": "Fintech",
+      "publishedAt": "2023-10-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Beem Kenya: Conversational Commerce Is the Future of Business",
+      "excerpt": "Beem's expansion into Kenya marks a significant milestone for the Tanzanian messaging startup, as it bets on conversational commerce as the next frontier for African e-commerce.",
+      "url": "https://www.linkedin.com/pulse/beem-kenya-conversational-commerce-future-business-isai-mathias-yk4vf/",
+      "category": "Innovation",
+      "publishedAt": "2023-10-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Can Africa Teach the World a Thing or Two About Innovation?",
+      "excerpt": "An argument for frugal innovation and grassroots problem-solving as uniquely African strengths, with examples of Tanzanian and East African companies that have developed globally relevant solutions under resource constraints.",
+      "url": "https://www.linkedin.com/pulse/can-africa-teach-world-thing-two-innovation-isai-mathias-55krf/",
+      "category": "Innovation",
+      "publishedAt": "2023-11-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Attend the Final Tech Event of 2023 in Zanzibar",
+      "excerpt": "A preview and invitation to Startup Week Zanzibar, the closing major tech gathering of 2023, bringing together founders, investors, and innovators from across the East African archipelago.",
+      "url": "https://www.linkedin.com/pulse/attend-final-tech-event-2023-zanzibar-isai-mathias-quudf/",
+      "category": "Innovation",
+      "publishedAt": "2023-11-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Can Mobile Technology Improve Emergency Care?",
+      "excerpt": "An examination of how mobile-first health platforms are being deployed to strengthen emergency medical response in Tanzania, reducing critical response times and improving patient outcomes in under-resourced settings.",
+      "url": "https://www.linkedin.com/pulse/can-mobile-technology-improve-emergency-care-isai-mathias-z01kf/",
+      "category": "Innovation",
+      "publishedAt": "2023-12-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    }
+  ],
+  "weeklyRoundups": [
+    {
+      "title": "Weekly Roundup: Feb 11-18, 2023",
+      "excerpt": "Ten important headlines from Tanzania's tech scene this week, plus two startups to watch as the country's digital ecosystem continues to gain momentum.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias/",
+      "publishedAt": "2023-02-18T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Feb 19-25, 2023",
+      "excerpt": "Ten key headlines and two standout startups from Tanzania's tech and innovation space for the third week of February.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias-1f/",
+      "publishedAt": "2023-02-25T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Feb 26 - Mar 4, 2023",
+      "excerpt": "Ten important headlines bridging February and March in Tanzania's tech scene, with two startups worth keeping an eye on.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias-2f/",
+      "publishedAt": "2023-03-04T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Mar 5-11, 2023",
+      "excerpt": "Ten notable headlines and two startups to watch from Tanzania's technology ecosystem for the second week of March.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias-3f/",
+      "publishedAt": "2023-03-11T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Mar 12-17, 2023",
+      "excerpt": "Ten important events and two startups to watch from Tanzania's tech landscape during the third week of March.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-events-2-startups-watch-isai-mathias/",
+      "publishedAt": "2023-03-17T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Apr 2-8, 2023",
+      "excerpt": "Ten important headlines and two startups to watch from Tanzania's tech and startup ecosystem for the first week of April.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias-5f/",
+      "publishedAt": "2023-04-08T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Apr 9-15, 2023",
+      "excerpt": "Ten key headlines and two startups to watch as Tanzania's tech sector enters the second week of April with fresh product launches and policy updates.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias-6f/",
+      "publishedAt": "2023-04-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Apr 16-22, 2023",
+      "excerpt": "Ten notable headlines and two startups to follow from Tanzania's digital and innovation space for the third week of April.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-10-important-headlines-2-startups-watch-mathias-7f/",
+      "publishedAt": "2023-04-22T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Apr 23-29, 2023",
+      "excerpt": "Seven important headlines from Tanzania's tech ecosystem wrap up April, covering funding news, product launches, and emerging trends.",
+      "url": "https://www.linkedin.com/pulse/week-tanzania-tech-7-important-headlines-isai-mathias/",
+      "publishedAt": "2023-04-29T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Apr 30 - May 6, 2023",
+      "excerpt": "Seven headlines from Silicon Bongo covering the latest developments in Tanzania's technology and startup scene as the new month begins.",
+      "url": "https://www.linkedin.com/pulse/7-headlines-from-week-silicon-bongo-isai-mathias/",
+      "publishedAt": "2023-05-06T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: May 7-13, 2023",
+      "excerpt": "Ten important headlines from Tanzanian tech this week, with expert contributions offering deeper context on the stories shaping the local digital economy.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-10-important-headlines-firas-ahmad-isai-mathias/",
+      "publishedAt": "2023-05-13T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: May 14-20, 2023",
+      "excerpt": "Seven important headlines and a curated selection of startups to watch from Tanzania's tech ecosystem for the third week of May.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-7-important-headlines-startups-watch-isai-mathias/",
+      "publishedAt": "2023-05-20T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: May 21-27, 2023",
+      "excerpt": "Eight important headlines and one product to watch from Tanzania's tech scene, rounding out the final full week of May.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-8-important-1-product-watch-isai-mathias/",
+      "publishedAt": "2023-05-27T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: May 26 - Jun 2, 2023",
+      "excerpt": "Eight important headlines and one product to watch across a week that bridged the end of May and the start of June in Tanzania's tech calendar.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-8-important-headlines-1-product-watch-mathias/",
+      "publishedAt": "2023-06-02T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jun 4-10, 2023",
+      "excerpt": "Seven important headlines and two startups to watch from Tanzania's technology sector for the second week of June.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-7-important-headlines-2-startup-watch-mathias/",
+      "publishedAt": "2023-06-10T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jun 11-17, 2023",
+      "excerpt": "Seven key headlines and two startups to watch from Tanzania's digital economy as mid-June brings a flurry of announcements and funding rounds.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-7-important-headlines-2-startups-watch-mathias/",
+      "publishedAt": "2023-06-17T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jun 18-24, 2023",
+      "excerpt": "Seven important headlines and one startup to watch as Tanzania's tech ecosystem moves through the final stretch of June.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-7-important-headlines-1-startup-watch-mathias/",
+      "publishedAt": "2023-06-24T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jun 25 - Jul 1, 2023",
+      "excerpt": "Gas Fasta expands to Goba, plus seven other Tanzanian tech stories that defined the final week of June and the dawn of the second half of 2023.",
+      "url": "https://www.linkedin.com/pulse/gas-fasta-expands-goba-plus-7-other-tanzanian-tech-stories-mathias/",
+      "publishedAt": "2023-07-01T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jul 2-8, 2023",
+      "excerpt": "Ten important headlines and two expert opinions from Tanzania's tech scene open the second half of 2023 with fresh investment activity and product milestones.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-10-important-headlines-2-expert-opinions-mathias/",
+      "publishedAt": "2023-07-08T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jul 9-15, 2023",
+      "excerpt": "The top 10 headlines from Tanzania's tech space, alongside startups to watch and expert opinions, for the second week of July.",
+      "url": "https://www.linkedin.com/pulse/week-tz-tech-10-top-headlines-startups-expert-opinions-isai-mathias/",
+      "publishedAt": "2023-07-15T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jul 16-22, 2023",
+      "excerpt": "Key headlines, startups to watch, and expert opinions from Tanzania's technology ecosystem for the third week of July.",
+      "url": "https://www.linkedin.com/pulse/week-tz-tech-headlines-startups-expert-opinions-isai-mathias/",
+      "publishedAt": "2023-07-22T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jul 23-29, 2023",
+      "excerpt": "Fifteen top headlines, startups, and expert opinions close out July in Tanzania's tech scene with one of the busiest news weeks of the year.",
+      "url": "https://www.linkedin.com/pulse/week-tz-tech-top-15-headlines-startups-expert-opinions-isai-mathias/",
+      "publishedAt": "2023-07-29T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Jul 30 - Aug 5, 2023",
+      "excerpt": "Key headlines, startups to watch, and industry insights from Tanzania's tech ecosystem as the summer edition of the roundup bridges July and August.",
+      "url": "https://www.linkedin.com/pulse/week-tz-tech-headlines-startups-insights-isai-mathias/",
+      "publishedAt": "2023-08-05T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Aug 6-12, 2023",
+      "excerpt": "Airtel launches a submarine cable, plus nine other Tanzanian tech stories that shaped the second week of August.",
+      "url": "https://www.linkedin.com/pulse/airtel-launches-submarine-cable-plus-9-other-tech-stories-mathias/",
+      "publishedAt": "2023-08-12T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Aug 20-26, 2023",
+      "excerpt": "Ten important headlines, events, and expert analysis from Tanzania's tech scene for the penultimate week of August.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-10-important-headlines-events-expert-isai-mathias/",
+      "publishedAt": "2023-08-26T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Aug 27 - Sep 2, 2023",
+      "excerpt": "All the important headlines and analysis from Tanzania's tech scene as August draws to a close and September begins.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-all-important-headlines-analysis-isai-mathias/",
+      "publishedAt": "2023-09-02T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Sep 3-9, 2023",
+      "excerpt": "Key developments and headlines from Tanzania's technology sector for the first full week of September.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-isai-mathias/",
+      "publishedAt": "2023-09-09T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Monthly Roundup: September 2023",
+      "excerpt": "A comprehensive look at all the major stories, funding rounds, and product launches in Tanzania's tech ecosystem throughout September 2023.",
+      "url": "https://www.linkedin.com/pulse/september-tanzanian-tech-2023-isai-mathias/",
+      "publishedAt": "2023-09-30T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Nov 5-11, 2023",
+      "excerpt": "The government invests in mental health AI, plus ten other Tanzanian tech stories as the ecosystem prepares for a busy close to the year.",
+      "url": "https://www.linkedin.com/pulse/government-invests-mental-health-ai-plus-10-other-tech-isai-mathias-ffpff/",
+      "publishedAt": "2023-11-11T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Nov 12-18, 2023",
+      "excerpt": "OpenAI's leadership shake-up resonates in Dar es Salaam, plus eleven other Tanzanian tech headlines from a momentous week in global and local technology.",
+      "url": "https://www.linkedin.com/pulse/openai-appoints-interim-ceo-plus-11-other-tanzanian-tech-isai-mathias-ekdqf/",
+      "publishedAt": "2023-11-18T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Nov 19-25, 2023",
+      "excerpt": "Funguo announces its second cohort of startups, plus other notable Tanzanian tech stories from the penultimate week of November.",
+      "url": "https://www.linkedin.com/pulse/funguo-announces-2nd-cohort-plus-other-tanzanian-tech-isai-mathias-weylf/",
+      "publishedAt": "2023-11-25T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Dec 3-9, 2023",
+      "excerpt": "A family's Sh175 million sickle cell disease burden highlights health-tech gaps, plus seven other Tanzanian tech stories from the first full week of December.",
+      "url": "https://www.linkedin.com/pulse/sickle-cell-disease-costs-family-sh175-mn-plus-7-other-isai-mathias-wkudf/",
+      "publishedAt": "2023-12-09T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Dec 10-16, 2023",
+      "excerpt": "Key headlines and stories from Tanzania's technology ecosystem for the week of December 10-16, with end-of-year retrospectives beginning to take shape.",
+      "url": "https://www.linkedin.com/pulse/week-tanzanian-tech-dec-10-16-2023-isai-mathias-bee9f/",
+      "publishedAt": "2023-12-16T00:00:00Z",
+      "author": "Atoms & Bits"
+    },
+    {
+      "title": "Weekly Roundup: Dec 17-23, 2023",
+      "excerpt": "Key headlines and stories from Tanzania's technology ecosystem for the final full week of 2023, wrapping up a transformative year for the local digital economy.",
+      "url": null,
+      "publishedAt": "2023-12-23T00:00:00Z",
+      "author": "Atoms & Bits"
+    }
+  ]
+}

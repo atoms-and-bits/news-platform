@@ -6,7 +6,7 @@ interface ArticleCardProps {
   title: string;
   author: string;
   time: string;
-  imageUrl: string;
+  imageUrl?: string;
   className?: string;
   size?: 'large' | 'medium';
   onClick?: () => void;
@@ -40,14 +40,22 @@ export function ArticleCard({
 
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-
-        {/* Gradient Overlay - Deep Navy */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000137] via-[#000137]/60 to-transparent opacity-90" />
+        {imageUrl ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              alt={title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            {/* Gradient Overlay - Deep Navy */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000137] via-[#000137]/60 to-transparent opacity-90" />
+          </>
+        ) : (
+          <div className="w-full h-full bg-[#000137] flex items-center justify-center">
+            <span className="text-white/20 font-serif font-bold text-4xl tracking-widest select-none">A&B</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000137] via-[#000137]/60 to-transparent opacity-90" />
+          </div>
+        )}
       </div>
 
       {/* Content Overlay */}

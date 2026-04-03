@@ -24,7 +24,7 @@ interface Article {
   authorRole: string;
   time: string;
   readTime: string;
-  imageUrl: string;
+  imageUrl?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any[]; // Portable Text blocks from Sanity
   premium: boolean;
@@ -37,7 +37,7 @@ interface RelatedArticle {
   category: string;
   title: string;
   time: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 interface ArticleContentProps {
@@ -314,17 +314,16 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
         </header>
 
         {/* Hero Image */}
-        <div className="mb-12 rounded-xl overflow-hidden shadow-lg">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={article.imageUrl}
-            alt={article.title}
-            className="w-full h-[300px] md:h-[450px] object-cover"
-          />
-          <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 text-right italic border-t border-gray-100">
-            Image via Unsplash
+        {article.imageUrl && (
+          <div className="mb-12 rounded-xl overflow-hidden shadow-lg">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={article.imageUrl}
+              alt={article.title}
+              className="w-full h-[300px] md:h-[450px] object-cover"
+            />
           </div>
-        </div>
+        )}
 
         {/* Article Body */}
         <div className="prose prose-lg prose-indigo max-w-none mb-16 relative">
@@ -428,12 +427,18 @@ export function ArticleContent({ article, relatedArticles }: ArticleContentProps
             <Link key={related.id} href={`/article/${related.slug}`}>
               <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col">
                 <div className="h-48 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={related.imageUrl}
-                    alt={related.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
+                  {related.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={related.imageUrl}
+                      alt={related.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#000137] flex items-center justify-center">
+                      <span className="text-white/20 font-serif font-bold text-3xl tracking-widest select-none">A&B</span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <span className="text-[#2f3192] text-xs font-bold uppercase mb-2">

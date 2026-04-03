@@ -42,9 +42,9 @@ export default async function ArticlePage({ params }: PageProps) {
     authorRole: sanityArticle.authorRole,
     time: formatRelativeTime(sanityArticle.publishedAt),
     readTime: sanityArticle.readTime,
-    imageUrl: sanityArticle.mainImage
+    imageUrl: sanityArticle.mainImage?.asset
       ? urlFor(sanityArticle.mainImage).width(1200).height(800).url()
-      : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80',
+      : undefined,
     body: sanityArticle.body, // Portable Text blocks
     premium: sanityArticle.premium || false,
     featured: sanityArticle.featured || false,
@@ -61,9 +61,9 @@ export default async function ArticlePage({ params }: PageProps) {
       category: a.category,
       title: a.title,
       time: formatRelativeTime(a.publishedAt),
-      imageUrl: a.mainImage
+      imageUrl: a.mainImage?.asset
         ? urlFor(a.mainImage).width(600).height(400).url()
-        : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80',
+        : undefined,
     }));
 
   return <ArticleContent article={article} relatedArticles={relatedArticles} />;
